@@ -38,6 +38,7 @@ The following environment variables are set in each environment in the Github Re
 - `FB_HOSTING_CREDENTIALS`: A google cloud service account JSON key granting permission to push app builds to firebase hosting. [See steps detailed here](https://github.com/FirebaseExtended/action-hosting-deploy/blob/main/docs/service-account.md) for creating a service account with appropriate roles. All newlines should be removed from the json key file before adding it as a secret in github actions
 - `FB_FIRESTORE_CREDENTIALS`: A google cloud service account JSON key with permission to configure Firestore. Use the steps detailed above, but instead grant only the `Cloud Datastore Owner` role when creating the service account. 
 
+Additionally, the following API must be enabled in each Google Cloud project to allow the CI pipelines to deploy to Firebase Hosting via API call: https://console.cloud.google.com/apis/library/firebasehosting.googleapis.com
 
 
 
