@@ -1,0 +1,25 @@
+name: Prod Deploy Firestore Config
+on:
+  workflow_dispatch:
+
+jobs:
+  test_and_build:
+    runs-on: ubuntu-latest
+    environment: 'Production'
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        
+    - name: Install Firebase CLI
+      run: curl -sL https://firebase.tools | bash
+
+    - name: Deploy Firestore configuration
+      env:
+        SERVICE_ACCOUNT: ${{ secrets.FB_FIRESTORE_CREDENTIALS }}
+      run: |
+        echo "$SERVICE_ACCOUNT" >> google_service_account.json
+        export GOOGLE_APPLICATION_CREDENTIALS=google_service_account.json
+        firebase --version
+        firebase deploy --project quickshop-prod --only firestore
