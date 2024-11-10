@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  test_and_build:
+  deploy_config:
     runs-on: ubuntu-latest
     environment: 'Development'
     steps:
