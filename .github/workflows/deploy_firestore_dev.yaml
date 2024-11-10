@@ -22,4 +22,4 @@ jobs:
         echo "$SERVICE_ACCOUNT" >> google_service_account.json
         export GOOGLE_APPLICATION_CREDENTIALS=google_service_account.json
         firebase --version
-        firebase deploy --project quickshop-dev --only firestore
+        firebase deploy --project quickshop-dev --only firestore --debug
