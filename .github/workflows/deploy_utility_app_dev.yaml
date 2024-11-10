@@ -1,0 +1,34 @@
+name: Dev Deploy Utility App
+on:
+  workflow_dispatch:
+
+jobs:
+  test_and_build:
+    runs-on: ubuntu-latest
+    environment: 'Development'
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Verify node version
+      run: node --version
+
+    - name: Install dependencies
+      working-directory: ./quickshop-utility-app
+      run: npm install
+
+    - name: Use dev enviroment variables
+      run: cp ./quickshop-utility-app/.env.dev ./quickshop-utility-app/.env
+
+    - name: Build
+      working-directory: ./quickshop-utility-app
+      run: npm run build
+
+    - name: Deploy to Firebase Hosting
+      uses: FirebaseExtended/action-hosting-deploy@v0
+      with:
+        firebaseServiceAccount: '${{ secrets.FB_HOSTING_CREDENTIALS }}'
+        channelId: live
+        projectId: quickshop-dev
