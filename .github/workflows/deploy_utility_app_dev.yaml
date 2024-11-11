@@ -26,6 +26,9 @@ jobs:
       working-directory: ./quickshop-utility-app
       run: npm run build
 
+    - name: Copy app links config file
+      run: cp ./app-links/assetslinks-dev.json ./quickshop-utility-app/out/.well-known/assetslinks.json
+
     - name: Deploy to Firebase Hosting
       uses: FirebaseExtended/action-hosting-deploy@v0
       with:

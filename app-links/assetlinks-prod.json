@@ -1,0 +1,12 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.buntagon.quickshop",
+    "sha256_cert_fingerprints":
+    [
+      "88:0A:51:25:13:DE:33:2C:7E:A7:56:31:B9:66:B2:DD:06:5A:4E:CD:AE:03:60:97:BE:03:DD:CA:ED:E3:8B:2C",
+      "AA:8C:60:E0:13:88:BF:F3:FB:10:DF:3B:98:D9:B6:D7:F2:3A:4A:FE:F1:A4:98:20:17:D5:49:A7:4C:8B:12:23"
+    ]
+  }
+}]
