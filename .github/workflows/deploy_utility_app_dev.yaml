@@ -27,7 +27,9 @@ jobs:
       run: npm run build
 
     - name: Copy app links config file
-      run: cp ./app-links/assetlinks-dev.json ./quickshop-utility-app/out/.well-known/assetlinks.json
+      run: |
+        mkdir -p ./quickshop-utility-app/out/.well-known
+        cp ./app-links/assetlinks-dev.json ./quickshop-utility-app/out/.well-known/assetlinks.json
 
     - name: Deploy to Firebase Hosting
       uses: FirebaseExtended/action-hosting-deploy@v0
