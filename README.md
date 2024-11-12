@@ -30,6 +30,15 @@ In this repository, the `/app-links` folder contains verions of the `assetslinks
 
 When a link to the Quickshop domain name is opened on a user's device, and the Quickshop app is already installed with its manifest entry declaring thatit can handle the link, then the Android OS automatically loads this `assetlinks.json` file to verify if the app should be allowed to automatically handle the link instead of opening it in the browser. I 
 
+### NextJS Routing
+The App Router model in NextJS seems to be the preferred router going forward over the older Pages Router, due to its stronger support for server-side rendering with server components. However, it seems that the app router does not support dynamic paths when bundling the application for static export: https://github.com/vercel/next.js/discussions/55393
+
+This means that App Router cannot support a path like `<host>/invites/<invite-id>` where the invite ID is not known at build time. Obviously all the invites do not exist at build time, which makes this a major flaw in the app router when it comes to static export. Consequently, the utility app uses both the app router, with files under `/app`, and the page router, with files under `/pages`. 
+
+This impacts CSS styling with tailwind, since routes under both `/app` and `/pages` need to have CSS Tailwind styles applied:
+- App Router: Styles defined in `/app/globals.css` and applied in `/app/layout.tsx`. [Documentation](https://nextjs.org/docs/app/building-your-application/styling/tailwind-css)
+- Pages Router: Styles defined in `/styles/globals.css` and applied in `/pages/_app.tsx`. [Documentation](https://nextjs.org/docs/pages/building-your-application/styling/tailwind-css)
+
 ## Firestore Configuration
 Configuration for the Firestore NoSQL databases used by Quickshop are stored in the following files:
 1. `firestore.rules` Declares security rules which control user access to firestore documents. [Firestore security rules documentation](https://firebase.google.com/docs/firestore/security/get-started)

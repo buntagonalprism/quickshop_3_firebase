@@ -19,9 +19,6 @@ jobs:
       working-directory: ./quickshop-utility-app
       run: npm install
 
-    - name: Use dev enviroment variables
-      run: cp ./quickshop-utility-app/.env.dev ./quickshop-utility-app/.env
-
     - name: Build
       working-directory: ./quickshop-utility-app
       run: npm run build
