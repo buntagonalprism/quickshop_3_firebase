@@ -4,7 +4,8 @@ This project hosts the configuration deployed to Firebase for the Quickshop 3 pr
 
 ## Prerequesites
 - [NodeJS](https://nodejs.org/en) 18.18 or greater
-- [Firebase CLI](https://firebaseopensource.com/projects/firebase/firebase-tools/) 12.4.8 or greater
+- [Firebase CLI](https://firebaseopensource.com/projects/firebase/firebase-tools/) 13.24.2 or greater
+- [Python](https://www.python.org/). 3.10 or 3.11
 
 ## Utility App 
 The utility app is a Next.js application that handles sharing links for users that do not already have Quickshop installed. The app is built as a [static SPA](https://nextjs.org/docs/pages/building-your-application/deploying#static-html-export) with no server-side logic, and hosted in Firebase Hosting. 
@@ -48,6 +49,48 @@ To deploy via command line:
 1. Run `firebase deploy --project <PROJECT_NAME> -- only firestore`
 
 ## Firebase Functions
+
+### Development Setup
+1. Verify system python installation:
+    - `python --version`: 3.11.9
+    - `pip --version`: 24.0
+2. Open a terminal in the `/functions` folder of this repository
+3. Create `venv` environment
+    - `python -m venv venv`
+    - This uses the `venv` command to create a virtual environment, which we have chosen to also name `venv`
+    - The virtual environment is created in a folder matching its name, i.e. `functions/venv`
+4. Activate the environment using a script in `functions/venv/Scripts`
+    - On windows, run `.\venv\Scripts\activate.ps1`
+    - This will activate the python virtual environment in your current terminal session.
+5. Install dependencies 
+    - `pip install -r .\requirements.txt`
+    - Direct dependencies listed in `requirements.txt` as well as indirect dependencies will be installed in the venv folder: `functions/venv/Lib/site-packages` 
+6. Open a python file in `/functions`, and select the python interpreter as `/functions/venv/Scripts/python`. All IDEs that support Python should detect this as a virtual environment and display the environment name (i.e. also `venv` in this case) 
+
+### Development Debugging
+1. Start the Firebase emulator suite running: `firebase emulators:start`
+2. Check the table in the output for the link to the Emulator UI 
+    - `http://127.0.0.1:4000/functions` for example
+    - Opening this page will display the log outputs from the functions exectuion
+3. Check the log output for lines like the following to get the paths to use for calling http-triggered functions locally:
+    - `http function initialized (http://127.0.0.1:5001/quickshop-dev/us-central1/FUNCTION_NAME)`
+4. Invoke http triggered functions using tools like curl or postman
+    - `curl http://127.0.0.1:5001/quickshop-dev/us-central1/FUNCTION_NAME?param=foobar` for example
+5. Editing the python code in function definitions will automatically hot reload the emulator with the new function definitions
+
+### Initial Setup
+These steps were followed to perform initial setup of Firebase functions, as described [here](https://firebase.google.com/docs/functions/get-started?gen=2nd). These steps do not need to be repeated to continue developing the functions.
+1. Verify system python installation is available on path:
+    - `python --version`: 3.11.9
+    - `pip --version`: 24.0
+2. Set dev project as default `firebase use quickshop-dev` 
+3. Initialise functions `firebase init functions`
+4. Select Python as the language for cloud functions. A `functions` folder was created containing:
+    - `main.py`: Example firebase functions written in python
+    - `requirements.txt`: List of python package dependencies for pip installer
+5. Answer `No` to 'Install dependencies now?', because of [this issue with initialising python functions](https://stackoverflow.com/questions/76450609/firebase-functions-gen2-python-init-does-not-work)
+6. Add the `venv` folder as ignored in `/functions/.gitignore`. Not sure why this wasn't ignored by default. 
+7. Follow the Development Setup steps above to prepare the venv environment for development
 
 ## CI / CD Pipelines
 The following environment variables are set in each environment in the Github Repo under Settings > Environments:
