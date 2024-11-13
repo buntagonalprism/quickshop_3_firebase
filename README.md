@@ -10,6 +10,12 @@ This project hosts the configuration deployed to Firebase for the Quickshop 3 pr
 ## Utility App 
 The utility app is a Next.js application that handles sharing links for users that do not already have Quickshop installed. The app is built as a [static SPA](https://nextjs.org/docs/pages/building-your-application/deploying#static-html-export) with no server-side logic, and hosted in Firebase Hosting. 
 
+### App Distribution Invite Links
+The utility app uses [invite links for Firebase App Distribution](https://firebase.google.com/docs/app-distribution/create-invite-links?platform=android) to make it easy for users to sign themselves up as a tester in Firebase App Distribution. 
+
+Invite links for each target environment are stored in environment files at: `/quickshop-utility-app/.env.<ENVIRONMENT_NAME>`
+
+### Develop and Deploy
 To run locally
 1. Copy and rename either of `.env.dev` or `.env.prod` to `.env`
 2. From `quickshop-utility-app` folder run `npm run dev`

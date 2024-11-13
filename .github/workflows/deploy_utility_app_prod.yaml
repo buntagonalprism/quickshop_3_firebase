@@ -19,11 +19,14 @@ jobs:
       working-directory: ./quickshop-utility-app
       run: npm install
 
+    - name: Use prod environment file
+      run: cp ./quickshop-utility-app/.env.prod ./quickshop-utility-app/.env
+
     - name: Build
       working-directory: ./quickshop-utility-app
       run: npm run build
 
-    - name: Copy app links config file
+    - name: Use prod app links config file
       run: |
         mkdir -p ./quickshop-utility-app/out/.well-known  
         cp ./app-links/assetlinks-prod.json ./quickshop-utility-app/out/.well-known/assetlinks.json
