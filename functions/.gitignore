@@ -1,5 +1,10 @@
-*.local
+# Compiled JavaScript files
+lib/**/*.js
+lib/**/*.js.map
 
-# Python environments
-venv
-__pycache__
+# TypeScript v1 declaration files
+typings/
+
+# Node.js dependency directory
+node_modules/
+*.local

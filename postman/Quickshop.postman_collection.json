@@ -1,0 +1,108 @@
+{
+	"info": {
+		"_postman_id": "f94386e3-90a9-40cc-a83f-7a5772358836",
+		"name": "Quickshop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3900726"
+	},
+	"item": [
+		{
+			"name": "Accept List Invite",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"inviteId\": \"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{functions_host}}/acceptListInvite",
+					"host": [
+						"{{functions_host}}"
+					],
+					"path": [
+						"acceptListInvite"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{id_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"\r",
+					"async function getIdToken() {\r",
+					"    try {\r",
+					"\r",
+					"        const response = await pm.sendRequest({\r",
+					"            url: \"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=\" + pm.environment.get(\"auth.api_key\"),\r",
+					"            method: \"POST\",\r",
+					"            body: {\r",
+					"                \"email\": pm.environment.get(\"auth.email\"),\r",
+					"                \"password\": pm.environment.get(\"auth.password\"),\r",
+					"                \"returnSecureToken\": true\r",
+					"            }\r",
+					"        });\r",
+					"\r",
+					"        pm.environment.set(\"id_token\", response['idToken']);\r",
+					"        pm.environment.set(\"id_token_expiry\", Date.now() + (1000 * parseInt(response['expiresIn'])))\r",
+					"\r",
+					"        console.log(response.json());\r",
+					"    } catch (err) {\r",
+					"        console.error(err);\r",
+					"    }\r",
+					"}\r",
+					"\r",
+					"let idToken = pm.environment.get(\"id_token\");\r",
+					"let idTokenExpiry = pm.environment.get(\"id_token_expiry\");\r",
+					"\r",
+					"// Get token if it does not exist\r",
+					"if (!idToken || !idTokenExpiry) {\r",
+					"    console.log(\"Fetching ID token\");\r",
+					"    await getIdToken();\r",
+					"}\r",
+					"\r",
+					"// Refresh token if it has expired, with 10 seconds buffer time \r",
+					"else if (Date.now() > idTokenExpiry - 10000) {\r",
+					"    console.log(\"Refreshing ID token\")\r",
+					"    await getIdToken();\r",
+					"}\r",
+					"else {\r",
+					"    console.log(\"ID token present and valid\");\r",
+					"}\r",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
