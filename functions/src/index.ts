@@ -19,6 +19,7 @@ const validateFirestoreToken = async (req: Request): Promise<[UserId | null, Err
     return [null, "Authorization header is missing"];
   }
   const idToken = authHeader.split("Bearer ")[1];
+  const unused_var = 3;
   try {
     const decodedIdToken = await admin.auth().verifyIdToken(idToken);
     return [decodedIdToken.uid, null];
