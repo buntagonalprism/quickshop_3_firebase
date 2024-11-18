@@ -25,6 +25,7 @@ jobs:
       run: curl -sL https://firebase.tools | bash
   
     - name: Deploy Firestore configuration
+      shell: bash
       env:
         SERVICE_ACCOUNT: ${{ secrets.FB_FUNCTIONS_CREDENTIALS }}
       run: |
