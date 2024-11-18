@@ -21,9 +21,13 @@ jobs:
       working-directory: ./functions
       run: npm install
 
-    - name: Try linting directly 
+    - name: Lint
       working-directory: ./functions
       run: npm run lint
+
+    - name: Build
+      working-directory: ./functions
+      run: npm run build
 
     - name: Install Firebase CLI
       run: curl -sL https://firebase.tools | bash
