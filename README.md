@@ -3,7 +3,7 @@
 This project hosts the configuration deployed to Firebase for the Quickshop 3 project.
 
 ## Prerequesites
-- [NodeJS](https://nodejs.org/en) 18.18 or greater
+- [NodeJS](https://nodejs.org/en) 22.11.0 or greater
 - [Firebase CLI](https://firebaseopensource.com/projects/firebase/firebase-tools/) 13.24.2 or greater
 
 ## Utility App 
