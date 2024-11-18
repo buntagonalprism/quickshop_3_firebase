@@ -1,0 +1,36 @@
+name: Prod Deploy Functions
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy_config:
+    runs-on: ubuntu-latest
+    environment: 'Production'
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Install Firebase CLI
+      run: curl -sL https://firebase.tools | bash
+  
+    - name: Deploy Firestore configuration
+      env:
+        SERVICE_ACCOUNT: ${{ secrets.FB_FUNCTIONS_CREDENTIALS }}
+      run: |
+        echo "$SERVICE_ACCOUNT" >> google_service_account.json
+        export GOOGLE_APPLICATION_CREDENTIALS=google_service_account.json
+        firebase --version
+        firebase deploy --project ${{ vars.FB_PROJECT_NAME }} --only functions --debug
+
+    - name: Install gcloud CLI
+      run: |
+        curl -sL https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-501.0.0-linux-x86_64.tar.gz | tar xz
+        CLOUDSDK_CORE_DISABLE_PROMPTS=1 ./google-cloud-sdk/install.sh
+
+    - name: Delete build artifacts 
+      run: |
+        export GOOGLE_APPLICATION_CREDENTIALS=google_service_account.json  
+        gcloud --version
+        gcloud artifacts repositories delete gcf-artifacts --project=${{ vars.FB_PROJECT_NAME }} --location=australia-southeast1 --quiet
