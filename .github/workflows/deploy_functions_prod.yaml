@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy_config:
+  deploy_functions:
     runs-on: ubuntu-latest
     environment: 'Production'
     steps:
