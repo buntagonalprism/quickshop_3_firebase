@@ -32,8 +32,7 @@ jobs:
     - name: Install Firebase CLI
       run: curl -sL https://firebase.tools | bash
   
-    - name: Deploy Firestore configuration
-      shell: bash
+    - name: Deploy Firebase Functions
       env:
         SERVICE_ACCOUNT: ${{ secrets.FB_FUNCTIONS_CREDENTIALS }}
       run: |
