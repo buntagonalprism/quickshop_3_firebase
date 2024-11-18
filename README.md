@@ -104,7 +104,7 @@ After manual deployment, the artifacts should be deleted to avoid this cost.
 ## CI / CD Pipelines
 The following environment variables are set in each environment in the Github Repo under Settings > Environments:
 - `FB_HOSTING_CREDENTIALS`: A google cloud service account JSON key granting permission to push app builds to firebase hosting. [See steps detailed here](https://github.com/FirebaseExtended/action-hosting-deploy/blob/main/docs/service-account.md) for creating a service account with appropriate roles. All newlines should be removed from the json key file before adding it as a secret in github actions
-- `FB_FUNCTIONS_CREDENTIALS`: A google cloud service account JSON key granting permissions to deploy to Firebase Functions. It should be assigned the roles `Cloud Functions Admin`, `Service Account User`, `Firebase Viewer`
+- `FB_FUNCTIONS_CREDENTIALS`: A google cloud service account JSON key granting permissions to deploy to Firebase Functions. It should be assigned the roles `Cloud Functions Admin`, `Service Account User`, `Firebase Viewer`, `Artifact Registry Administrator`
 - `FB_FIRESTORE_CREDENTIALS`: A google cloud service account JSON key with permission to configure Firestore. See next section for details
 
 ### Firestore Service Account Requirements
