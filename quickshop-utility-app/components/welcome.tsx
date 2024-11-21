@@ -25,6 +25,8 @@ export default function Welcome({forInvite}: {forInvite: boolean}) {
         <div className="max-w-96">The Quickshop Android app is currently in developer preview. If you would like to become an early-access tester, please request access.</div>
         {forInvite && <div className="max-w-96">Once you have installed Quickshop, open the sharing link again to view the shopping list.</div>}
         <Button color="warning" variant="contained" href={process.env.NEXT_PUBLIC_QUICKSHOP_APP_DIST_INVITE}>Request access</Button>
+        <div>Already have the app installed?</div>
+        <Button color="warning" variant="contained" href="quickshop://app/lists/invites/1234">Open Quickshop</Button>
       </main>
     </div>
   );
