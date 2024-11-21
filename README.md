@@ -39,7 +39,7 @@ When a link to the Quickshop domain name is opened on a user's device, and the Q
 ### NextJS Routing
 The App Router model in NextJS seems to be the preferred router going forward over the older Pages Router, due to its stronger support for server-side rendering with server components. However, it seems that the app router does not support dynamic paths when bundling the application for static export: https://github.com/vercel/next.js/discussions/55393
 
-This means that App Router cannot support a path like `<host>/invites/<invite-id>` where the invite ID is not known at build time. Obviously all the invites do not exist at build time, which makes this a major flaw in the app router when it comes to static export. Consequently, the utility app uses both the app router, with files under `/app`, and the page router, with files under `/pages`. 
+This means that App Router cannot support a path like `<host>/lists/invites/<invite-id>` where the invite ID is not known at build time. Obviously all the invites do not exist at build time, which makes this a major flaw in the app router when it comes to static export. Consequently, the utility app uses both the app router, with files under `/app`, and the page router, with files under `/pages`. 
 
 This impacts CSS styling with tailwind, since routes under both `/app` and `/pages` need to have CSS Tailwind styles applied:
 - App Router: Styles defined in `/app/globals.css` and applied in `/app/layout.tsx`. [Documentation](https://nextjs.org/docs/app/building-your-application/styling/tailwind-css)
