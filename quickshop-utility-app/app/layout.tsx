@@ -25,6 +25,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta property="og:title" content="Quickshop" />
+        <meta property="og:description" content="Rocket through your shopping" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://quickshop.buntagon.com/icon.png" />
+      </head>
       <body
         className={`${geistSans.variable} ${racingSansOne.variable} antialiased`}
       >
