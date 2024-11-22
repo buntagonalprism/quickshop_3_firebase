@@ -36,14 +36,12 @@ In this repository, the `/app-links` folder contains verions of the `assetslinks
 
 When a link to the Quickshop domain name is opened on a user's device, and the Quickshop app is already installed with its manifest entry declaring thatit can handle the link, then the Android OS automatically loads this `assetlinks.json` file to verify if the app should be allowed to automatically handle the link instead of opening it in the browser. I 
 
-### NextJS Routing
-The App Router model in NextJS seems to be the preferred router going forward over the older Pages Router, due to its stronger support for server-side rendering with server components. However, it seems that the app router does not support dynamic paths when bundling the application for static export: https://github.com/vercel/next.js/discussions/55393
+### App Links Configuration - Sharing Links via Facebook products 
+Our delightful friends at Facebook & Co have *helpfully* (sarcasm strongly intended) created their own standards for deep linking into mobile apps. Instead of just supporting what the Android and iOS operating systems do natively, if you open a HTTP deep link from Facebook or from Facebook Messenger (and probably also instagram), instead of deep-linking into the app it will open the link as a webpage in an embedded browser instead.
 
-This means that App Router cannot support a path like `<host>/lists/invites/<invite-id>` where the invite ID is not known at build time. Obviously all the invites do not exist at build time, which makes this a major flaw in the app router when it comes to static export. Consequently, the utility app uses both the app router, with files under `/app`, and the page router, with files under `/pages`. 
+It is possible to register your app with Facebook so that deep links work as they should when opening them from Facebook products; see the documentation here: https://developers.facebook.com/docs/applinks/overview. However, this requires further configuration to be added to the utility app webpage, and the installation of a facebook plugin in the mobile app, all just to handle behaviour which the operating system already provides. Personally, the improvement in user experience is not worth giving Meta the satisfaction of succumbing to their walled garden. 
 
-This impacts CSS styling with tailwind, since routes under both `/app` and `/pages` need to have CSS Tailwind styles applied:
-- App Router: Styles defined in `/app/globals.css` and applied in `/app/layout.tsx`. [Documentation](https://nextjs.org/docs/app/building-your-application/styling/tailwind-css)
-- Pages Router: Styles defined in `/styles/globals.css` and applied in `/pages/_app.tsx`. [Documentation](https://nextjs.org/docs/pages/building-your-application/styling/tailwind-css)
+The workaround implemented in the utility app is to display a button which can open the app using an [Android deep link](https://developer.android.com/training/app-links#deep-links) with a custom scheme rather than the http/https scheme.Of course, Facebook can't resist getting in one last parting shot. It shows a dialogue message that tries to make everything outside the "Metaverse" sound scary and untrustworthy: "The website you're viewing is attemping to open an external app. Would you like to continue?" Hilarious. 
 
 ## Firestore Configuration
 Configuration for the Firestore NoSQL databases used by Quickshop are stored in the following files:
