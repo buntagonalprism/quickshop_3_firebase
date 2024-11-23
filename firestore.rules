@@ -21,6 +21,11 @@ service cloud.firestore {
       allow read, update: if request.auth.uid in resource.data.editorIds;
       allow delete: if request.auth.uid == resource.data.ownerId;
     }
+
+    // Items can be managed by list editors
+    match /lists/{listId}/items/{itemId} {
+      allow read, write: if request.auth.uid in getList(listId).editorIds;
+    }
     
     // Invites can be created by list editors, and queried by the inviter. Anyone logged in
     // can read a singular invite, but they must know the inviteId.
