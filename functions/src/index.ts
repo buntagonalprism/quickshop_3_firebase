@@ -1,6 +1,6 @@
 import {setGlobalOptions} from "firebase-functions/options";
 import {onRequest, Request} from "firebase-functions/v2/https";
-import {onDocumentUpdated} from "firebase-functions/v2/firestore";
+import {onDocumentDeleted, onDocumentUpdated} from "firebase-functions/v2/firestore";
 import * as admin from "firebase-admin";
 import * as logger from "firebase-functions/logger";
 import {FieldValue} from "firebase-admin/firestore";
@@ -107,6 +107,17 @@ export const onListNameChanged = onDocumentUpdated("lists/{listId}", async (even
   const batch = admin.firestore().batch();
   invites.forEach((invite) => {
     batch.update(invite.ref, {listName: newListName});
+  });
+  await batch.commit();
+});
+
+// When a list is deleted, delete all the invites for that list
+export const onListDeleted = onDocumentDeleted("lists/{listId}", async (event) => {
+  const listId = event.params.listId;
+  const invites = await admin.firestore().collection("invites").where("listId", "==", listId).get();
+  const batch = admin.firestore().batch();
+  invites.forEach((invite) => {
+    batch.delete(invite.ref);
   });
   await batch.commit();
 });
