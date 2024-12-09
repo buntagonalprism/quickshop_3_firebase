@@ -1,5 +1,6 @@
 import {setGlobalOptions} from "firebase-functions/options";
 import {onRequest, Request} from "firebase-functions/v2/https";
+import {onDocumentUpdated} from "firebase-functions/v2/firestore";
 import * as admin from "firebase-admin";
 import * as logger from "firebase-functions/logger";
 import {FieldValue} from "firebase-admin/firestore";
@@ -27,7 +28,7 @@ const validateFirestoreToken = async (req: Request): Promise<[UserId | null, Err
   }
 };
 
-
+// When a user accepts a list invite, add them to the list's editors
 export const acceptListInvite = onRequest(async (req, res) => {
   // Validate the authentication token
   const [userId, errorMessage] = await validateFirestoreToken(req);
@@ -92,4 +93,20 @@ export const acceptListInvite = onRequest(async (req, res) => {
     res.status(400).json({error: (e as Error).message});
     return;
   }
+});
+
+// When a list is renamed, rename all the invites for that list
+export const onListNameChanged = onDocumentUpdated("lists/{listId}", async (event) => {
+  const oldListName = event.data?.before.get("name");
+  const newListName = event.data?.after.get("name");
+  if (oldListName === newListName) {
+    return;
+  }
+  const listId = event.params.listId;
+  const invites = await admin.firestore().collection("invites").where("listId", "==", listId).get();
+  const batch = admin.firestore().batch();
+  invites.forEach((invite) => {
+    batch.update(invite.ref, {listName: newListName});
+  });
+  await batch.commit();
 });
