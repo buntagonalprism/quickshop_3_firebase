@@ -142,6 +142,11 @@ export const onItemDeleted = onDocumentCreated("lists/{listId}/_itemDeletes/{del
     }
     transaction.delete(deleteRef);
     if (itemCount !== listData.itemCount) {
+      logger.info("Correcting list itemCount", {
+        listId: listId,
+        oldItemCount: listData.itemCount,
+        newItemCount: itemCount,
+      });
       transaction.update(listRef, {itemCount: itemCount});
     }
   });
