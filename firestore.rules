@@ -6,10 +6,6 @@ service cloud.firestore {
     	return get(/databases/$(database)/documents/lists/$(listId)).data
     }
 
-    function getUser(userId) {
-    	return get(/databases/$(database)/documents/users/$(userId)).data
-    }
-
     // Users can create and read their own user document
     match /users/{userId} {
       allow read, write: if request.auth.uid == userId;
@@ -27,6 +23,11 @@ service cloud.firestore {
       allow read, write: if request.auth.uid in getList(listId).editorIds;
     }
     
+    // Records of item deletes can be managed by list editors
+    match /lists/{listId}/_itemDeletes/{deleteId} {
+      allow create: if request.auth.uid in getList(listId).editorIds;
+    }
+
     // Invites can be created by list editors, and queried by the inviter. Anyone logged in
     // can read a singular invite, but they must know the inviteId.
     // https://firebase.google.com/docs/firestore/security/rules-structure#granular_operations

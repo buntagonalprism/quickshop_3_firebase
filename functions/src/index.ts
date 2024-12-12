@@ -1,6 +1,6 @@
 import {setGlobalOptions} from "firebase-functions/options";
 import {onRequest, Request} from "firebase-functions/v2/https";
-import {onDocumentDeleted, onDocumentUpdated} from "firebase-functions/v2/firestore";
+import {onDocumentCreated, onDocumentDeleted, onDocumentUpdated} from "firebase-functions/v2/firestore";
 import * as admin from "firebase-admin";
 import * as logger from "firebase-functions/logger";
 import {FieldValue} from "firebase-admin/firestore";
@@ -120,4 +120,29 @@ export const onListDeleted = onDocumentDeleted("lists/{listId}", async (event) =
     batch.delete(invite.ref);
   });
   await batch.commit();
+});
+
+// When a user deletes an item, they do so in an offline-friendly batched write that does not
+// guarantee consistency in case of concurrent deletes. This could result in the list itemCount
+// being decremented twice for the same item. This function corrects the count by checking the
+// item count in a transaction, and updating the list if needed.
+export const onItemDeleted = onDocumentCreated("lists/{listId}/_itemDeletes/{deleteId}", async (event) => {
+  const listId = event.params.listId;
+  const listRef = admin.firestore().collection("lists").doc(listId);
+  const deleteId = event.params.deleteId;
+  const deleteRef = admin.firestore().collection("lists").doc(listId).collection("_itemDeletes").doc(deleteId);
+  const itemCountQuery = admin.firestore().collection("lists").doc(listId).collection("items").count();
+
+  await admin.firestore().runTransaction(async (transaction) => {
+    const listDoc = await transaction.get(listRef);
+    const itemCount = (await transaction.get(itemCountQuery)).data().count;
+    const listData = listDoc.data();
+    if (!listData) {
+      throw new Error("List not found");
+    }
+    transaction.delete(deleteRef);
+    if (itemCount !== listData.itemCount) {
+      transaction.update(listRef, {itemCount: itemCount});
+    }
+  });
 });
