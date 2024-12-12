@@ -111,13 +111,17 @@ export const onListNameChanged = onDocumentUpdated("lists/{listId}", async (even
   await batch.commit();
 });
 
-// When a list is deleted, delete all the invites for that list
+// When a list is deleted, delete all the invites for that list and delete all list items
 export const onListDeleted = onDocumentDeleted("lists/{listId}", async (event) => {
   const listId = event.params.listId;
   const invites = await admin.firestore().collection("invites").where("listId", "==", listId).get();
+  const items = await admin.firestore().collection("lists").doc(listId).collection("items").get();
   const batch = admin.firestore().batch();
   invites.forEach((invite) => {
     batch.delete(invite.ref);
+  });
+  items.forEach((item) => {
+    batch.delete(item.ref);
   });
   await batch.commit();
 });
