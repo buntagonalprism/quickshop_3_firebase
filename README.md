@@ -20,14 +20,16 @@ To run locally
 2. From `quickshop-utility-app` folder run `npm run dev`
 
 To deploy to dev via command line
-1. Copy and rename `.env.dev` to `.env`
+1. In `quickshop-utility-app` folder, rename `.env.dev` to `.env`
 2. From `quickshop-utility-app` folder run `npm run build`. This will build a static web app version of the NextJS app, outputting to `quickshop-utility-app\out`
-3. From root folder run `firebase deploy --only hosting`. This will deploy the built assets to the default Firebase project, `quickshop-dev`, as specified in the `.firebaserc` file
+3. Copy and rename `app-links/assetlinks-dev.json` to `quickshop-utility-app/out/.well-known/assetlinks.json`. The `.well-known` folder will need to be created.
+4. From root folder run `firebase deploy --only hosting`. This will deploy the built assets to the default Firebase project, `quickshop-dev`, as specified in the `.firebaserc` file
 
 To deploy to prod via command line
 1. Copy and rename `.env.prod` to `.env`
 2. From `quickshop-utility-app` folder run `npm run build`. This will build a static web app version of the NextJS app, outputting to `quickshop-utility-app\out`
-3. From root folder run `firebase deploy --project quickshop-prod --only hosting`. This will deploy the built assets to the `quickshop-prod` Firebase project,
+3. Copy and rename `app-links/assetlinks-prod.json` to `quickshop-utility-app/out/.well-known/assetlinks.json`. The `.well-known` folder will need to be created.
+4. From root folder run `firebase deploy --project quickshop-prod --only hosting`. This will deploy the built assets to the `quickshop-prod` Firebase project
 
 ### App Links Configuration - Android
 Android apps can be configured to automatically handle `https` URLs instead of the link being opened in a browser. The complete steps required to enable this behaviour for a flutter app are described here: https://docs.flutter.dev/cookbook/navigation/set-up-app-links
