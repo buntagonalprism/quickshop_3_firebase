@@ -118,6 +118,7 @@ export const leaveList = onRequest(async (req, res) => {
       transaction.update(listRef, {
         editorIds: FieldValue.arrayRemove(userId),
         editors: FieldValue.arrayRemove(listData.editors.find((editor: Editor) => editor.id === userId)),
+        [`lastModified.${userId}`]: FieldValue.delete(),
       });
     });
     res.status(200).json({message: "Left list"});
