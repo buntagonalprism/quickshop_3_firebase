@@ -46,8 +46,8 @@ jobs:
         curl -sL https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-501.0.0-linux-x86_64.tar.gz | tar xz
         CLOUDSDK_CORE_DISABLE_PROMPTS=1 ./google-cloud-sdk/install.sh
 
-        - name: Delete build artifacts 
-        run: |
-          gcloud --version
-          gcloud auth activate-service-account --key-file=google_service_account.json
-          gcloud artifacts repositories delete gcf-artifacts --project=${{ vars.FB_PROJECT_NAME }} --location=australia-southeast1 --quiet
+    - name: Delete build artifacts 
+      run: |
+        gcloud --version
+        gcloud auth activate-service-account --key-file=google_service_account.json
+        gcloud artifacts repositories delete gcf-artifacts --project=${{ vars.FB_PROJECT_NAME }} --location=australia-southeast1 --quiet
