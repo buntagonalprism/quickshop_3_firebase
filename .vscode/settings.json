@@ -1,5 +1,15 @@
 {
     "eslint.workingDirectories": [
         "./functions"
-    ]
+    ],
+    "[typescript]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
+        "files.eol": "\n",
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": "always"
+        }
+    }
 }
