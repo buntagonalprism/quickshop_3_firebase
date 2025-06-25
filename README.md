@@ -60,12 +60,14 @@ To deploy via command line:
     - `cd functions`
     - `npm run build:watch`
 2. In a new terminal in the repository root directory, start firebase functions emulator running to host the functions. The `--inspect-functions` argument exposes a debug port for the function execution
-    - `firebase emulators:start --only functions --inspect-functions`
-3. Start a debug session in Visual Studio Code using the `Debug` launch configuration in the `Run and Debug` window. The configuration in `launch.json` will attach to the debug port exposed by the functions emulator, and breakpoints in the typescript files in `/functions/src` will be hit and the code can be stepped through and inspected. 
+    - `firebase emulators:start --only "firestore,functions" --inspect-functions --project quickshop-dev`
+3. Start a debug session in Visual Studio Code using the `Debug Functions` launch configuration in the `Run and Debug` window. The configuration in `launch.json` will attach to the debug port exposed by the functions emulator, and breakpoints in the typescript files in `/functions/src` will be hit and the code can be stepped through and inspected. 
 4. After editing any typescript files and saving:
     - Typescript files will be automatically recompiled to javascript
     - The emulator will automatically detect the updated javascript files and host them
     - The debug session in VSCode will be terminated and need to be restarted
+
+Both HTTP triggered functions and Firestore document trigger functions can be debugged in this manner. To test document triggered functions, connect the Quickshop app to the Firebase local emulator and use the app to make the data changes required to run the function. 
 
 ### Invoking HTTP Functions with Postman
 HTTP triggered functions are secured using Firebase Authentication, ensuring that only users of Quickshop registered in Firebase Authentication are able to invoke the functions. Authentication is performed using a bearer token in the `Authorization` header of incoming requests. The header value must be of format `Bearer <TOKEN>`, where `<TOKEN>` is a Google Identity Platform ID token, which can be obtained using the [`signInWithPassword` REST API](https://cloud.google.com/identity-platform/docs/use-rest-api#section-sign-in-email-password)
