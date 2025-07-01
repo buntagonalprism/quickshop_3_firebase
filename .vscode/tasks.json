@@ -1,0 +1,15 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start Firebase Emulators (Dev)",
+      "type": "shell",
+      "command": "npm run --prefix functions build:watch & firebase emulators:start --inspect-functions --project quickshop-dev",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    }
+  ]
+}
