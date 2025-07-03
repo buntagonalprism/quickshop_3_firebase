@@ -142,20 +142,21 @@ async function updateUserHistory(transaction: Transaction, userId: string, items
 
   // Get existing item and category history documents for the user
   const [itemHistorySnap, categoryHistorySnap] = await Promise.all([
-    getAllWhereIn(transaction, itemHistoryRef, "product", items.map((item) => item.product)),
-    getAllWhereIn(transaction, categoryHistoryRef, "name", Array.from(new Set(items.flatMap((item) => item.categories)))),
+    getAllWhereIn(transaction, itemHistoryRef, "nameLower", items.map((item) => item.product.toLowerCase())),
+    getAllWhereIn(transaction, categoryHistoryRef, "nameLower", Array.from(new Set(items.flatMap((item) => item.categories))).map((cat) => cat.toLowerCase())),
   ]);
 
 
   for (const item of items) {
     // Increment usage count for the item in history, or create a new history entry
     let itemHistory: ShoppingItemHistory;
-    const existingItemUpdate = result.items.find((i) => i.data.product === item.product);
+    const itemLower = item.product.toLowerCase();
+    const existingItemUpdate = result.items.find((i) => i.data.nameLower === itemLower);
     if (existingItemUpdate) {
       existingItemUpdate.data.lastUsed = timestamp;
       existingItemUpdate.data.usageCount += 1;
     } else {
-      const itemHistoryDoc = itemHistorySnap.find((doc) => doc.data().product === item.product);
+      const itemHistoryDoc = itemHistorySnap.find((doc) => doc.data().nameLower === itemLower);
       if (itemHistoryDoc) {
         itemHistory = shoppingItemHistorySchema.parse(itemHistoryDoc.data());
         itemHistory.lastUsed = timestamp;
@@ -163,7 +164,8 @@ async function updateUserHistory(transaction: Transaction, userId: string, items
         result.items.push({ref: itemHistoryDoc.ref, data: itemHistory});
       } else {
         itemHistory = {
-          product: item.product,
+          name: item.product,
+          nameLower: itemLower,
           categories: item.categories,
           lastUsed: timestamp,
           usageCount: 1,
@@ -174,12 +176,13 @@ async function updateUserHistory(transaction: Transaction, userId: string, items
 
     // Update or create category history entries
     for (const category of item.categories) {
-      const existingCategoryUpdate = result.categories.find((c) => c.data.name === category);
+      const categoryLower = category.toLowerCase();
+      const existingCategoryUpdate = result.categories.find((c) => c.data.nameLower === categoryLower);
       if (existingCategoryUpdate) {
         existingCategoryUpdate.data.lastUsed = timestamp;
         existingCategoryUpdate.data.usageCount += 1;
       } else {
-        const existingCategoryDoc = categoryHistorySnap.find((doc) => doc.data().name === category);
+        const existingCategoryDoc = categoryHistorySnap.find((doc) => doc.data().nameLower === categoryLower);
         if (existingCategoryDoc) {
           const existingCategory = shoppingCategoryHistorySchema.parse(existingCategoryDoc.data());
           existingCategory.lastUsed = timestamp;
@@ -190,6 +193,7 @@ async function updateUserHistory(transaction: Transaction, userId: string, items
             ref: categoryHistoryRef.doc(),
             data: {
               name: category,
+              nameLower: categoryLower,
               lastUsed: timestamp,
               usageCount: 1,
             },
