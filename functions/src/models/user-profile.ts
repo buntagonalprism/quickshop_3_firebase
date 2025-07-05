@@ -1,5 +1,4 @@
-import {Timestamp} from "firebase-admin/firestore";
-import z from "zod";
+import {z} from "zod";
 
 export const hiddenSuggestionsSchema = z.object({
   items: z.array(z.string()),
@@ -7,7 +6,7 @@ export const hiddenSuggestionsSchema = z.object({
 });
 
 export const userProfileSchema = z.object({
-  lastHistoryUpdate: z.instanceof(Timestamp),
+  lastHistoryUpdate: z.number(),
   hiddenSuggestions: hiddenSuggestionsSchema,
 });
 

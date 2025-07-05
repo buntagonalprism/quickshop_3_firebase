@@ -1,9 +1,8 @@
-import {Timestamp} from "firebase-admin/firestore";
 import {z} from "zod";
 import {shoppingItemSchema} from "./shopping-item";
 
 export const itemDeleteSchema = z.object({
-  timestamp: z.instanceof(Timestamp),
+  timestamp: z.number(),
   userId: z.string(),
   deletedCount: z.number(),
   items: z.array(shoppingItemSchema),

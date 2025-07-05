@@ -1,11 +1,10 @@
-import {Timestamp} from "firebase-admin/firestore";
 import {z} from "zod";
 
 export const shoppingItemHistorySchema = z.object({
   name: z.string(),
   nameLower: z.string(),
   categories: z.array(z.string()),
-  lastUsed: z.instanceof(Timestamp),
+  lastUsed: z.number(),
   usageCount: z.number(),
 });
 

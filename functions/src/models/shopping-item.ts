@@ -1,4 +1,3 @@
-import {Timestamp} from "firebase-admin/firestore";
 import {z} from "zod";
 
 export const shoppingItemSchema = z.object({
@@ -6,7 +5,7 @@ export const shoppingItemSchema = z.object({
   quantity: z.string(),
   categories: z.array(z.string()),
   lastModifiedByUserId: z.string(),
-  lastModifiedAt: z.instanceof(Timestamp),
+  lastModifiedAt: z.number(),
   completed: z.boolean(),
 });
 

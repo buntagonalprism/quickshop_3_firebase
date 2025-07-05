@@ -5,8 +5,9 @@ import {ShoppingItem} from "../models/shopping-item";
 import {ItemDelete, itemDeleteSchema} from "../models/item-delete";
 import {ShoppingItemHistory, shoppingItemHistorySchema} from "../models/history/shopping-item-history";
 import {ShoppingCategoryHistory, shoppingCategoryHistorySchema} from "../models/history/shopping-category-history";
-import {CollectionReference, DocumentReference, QueryDocumentSnapshot, Timestamp, Transaction} from "firebase-admin/firestore";
+import {CollectionReference, DocumentReference, QueryDocumentSnapshot, Transaction} from "firebase-admin/firestore";
 import {UserProfile, userProfileSchema} from "../models/user-profile";
+import {Temporal} from "temporal-polyfill";
 
 // When a list is renamed, rename all the invites for that list
 export const onListNameChanged = onDocumentUpdated("lists/{listId}", async (event) => {
@@ -73,15 +74,15 @@ export const onItemDeleted = onDocumentCreated("lists/{listId}/_itemDeletes/{del
     const userUpdates: {docRef: DocumentReference, data: UserProfile}[] = [];
 
     for (const userId of lastModifyingUsers) {
-      let updateTimestamp: Timestamp = Timestamp.now();
+      let updateTimestamp: Temporal.Instant = Temporal.Now.instant();
 
       const userDoc = users.docs.find((doc) => doc.id === userId);
       if (userDoc) {
         const userData = userProfileSchema.parse(userDoc.data()) as UserProfile;
         // We must *always* increase the value of the lastHistoryUpdate field so that client apps will register
         // the value as having changed, and therefore know to fetch history updates
-        updateTimestamp = maxTimestamp(Timestamp.fromMillis(userData.lastHistoryUpdate.toMillis() + 1), Timestamp.now());
-        userData.lastHistoryUpdate = updateTimestamp;
+        updateTimestamp = maxInstant(Temporal.Instant.fromEpochMilliseconds(userData.lastHistoryUpdate + 1), Temporal.Now.instant());
+        userData.lastHistoryUpdate = updateTimestamp.epochMilliseconds;
         userUpdates.push({
           docRef: userDoc.ref,
           data: userData,
@@ -90,7 +91,7 @@ export const onItemDeleted = onDocumentCreated("lists/{listId}/_itemDeletes/{del
         userUpdates.push({
           docRef: fs.collection("userHistory").doc(userId),
           data: {
-            lastHistoryUpdate: updateTimestamp,
+            lastHistoryUpdate: updateTimestamp.epochMilliseconds,
             hiddenSuggestions: {items: [], categories: []},
           } as UserProfile,
         });
@@ -129,7 +130,7 @@ export const onItemDeleted = onDocumentCreated("lists/{listId}/_itemDeletes/{del
 });
 
 
-async function updateUserHistory(transaction: Transaction, userId: string, items: ShoppingItem[], timestamp: Timestamp) : Promise<UserHistoryUpdates> {
+async function updateUserHistory(transaction: Transaction, userId: string, items: ShoppingItem[], timestamp: Temporal.Instant) : Promise<UserHistoryUpdates> {
   const fs = admin.firestore();
   const userHistoryDocRef = fs.collection("userHistory").doc(userId);
   const itemHistoryRef = userHistoryDocRef.collection("items");
@@ -153,13 +154,13 @@ async function updateUserHistory(transaction: Transaction, userId: string, items
     const itemLower = item.product.toLowerCase();
     const existingItemUpdate = result.items.find((i) => i.data.nameLower === itemLower);
     if (existingItemUpdate) {
-      existingItemUpdate.data.lastUsed = timestamp;
+      existingItemUpdate.data.lastUsed = timestamp.epochMilliseconds;
       existingItemUpdate.data.usageCount += 1;
     } else {
       const itemHistoryDoc = itemHistorySnap.find((doc) => doc.data().nameLower === itemLower);
       if (itemHistoryDoc) {
         itemHistory = shoppingItemHistorySchema.parse(itemHistoryDoc.data());
-        itemHistory.lastUsed = timestamp;
+        itemHistory.lastUsed = timestamp.epochMilliseconds;
         itemHistory.usageCount += 1;
         result.items.push({ref: itemHistoryDoc.ref, data: itemHistory});
       } else {
@@ -167,25 +168,26 @@ async function updateUserHistory(transaction: Transaction, userId: string, items
           name: item.product,
           nameLower: itemLower,
           categories: item.categories,
-          lastUsed: timestamp,
+          lastUsed: timestamp.epochMilliseconds,
           usageCount: 1,
         };
         result.items.push({ref: itemHistoryRef.doc(), data: itemHistory});
       }
     }
 
+
     // Update or create category history entries
     for (const category of item.categories) {
       const categoryLower = category.toLowerCase();
       const existingCategoryUpdate = result.categories.find((c) => c.data.nameLower === categoryLower);
       if (existingCategoryUpdate) {
-        existingCategoryUpdate.data.lastUsed = timestamp;
+        existingCategoryUpdate.data.lastUsed = timestamp.epochMilliseconds;
         existingCategoryUpdate.data.usageCount += 1;
       } else {
         const existingCategoryDoc = categoryHistorySnap.find((doc) => doc.data().nameLower === categoryLower);
         if (existingCategoryDoc) {
           const existingCategory = shoppingCategoryHistorySchema.parse(existingCategoryDoc.data());
-          existingCategory.lastUsed = timestamp;
+          existingCategory.lastUsed = timestamp.epochMilliseconds;
           existingCategory.usageCount += 1;
           result.categories.push({ref: existingCategoryDoc.ref, data: existingCategory});
         } else {
@@ -194,7 +196,7 @@ async function updateUserHistory(transaction: Transaction, userId: string, items
             data: {
               name: category,
               nameLower: categoryLower,
-              lastUsed: timestamp,
+              lastUsed: timestamp.epochMilliseconds,
               usageCount: 1,
             },
           });
@@ -223,8 +225,8 @@ async function getAllWhereIn(transaction: Transaction, collection: CollectionRef
   return chunks;
 }
 
-function maxTimestamp(a: Timestamp, b: Timestamp): Timestamp {
-  return a.toMillis() > b.toMillis() ? a : b;
+function maxInstant(a: Temporal.Instant, b: Temporal.Instant): Temporal.Instant {
+  return a.epochMilliseconds > b.epochMilliseconds ? a : b;
 }
 
 type UserHistoryUpdates = {
