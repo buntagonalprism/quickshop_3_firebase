@@ -10,6 +10,11 @@ service cloud.firestore {
     match /users/{userId} {
       allow read, write: if request.auth.uid == userId;
     }
+
+    // Users can create and read their own history
+    match /userHistory/{userId}/{document=**} {
+      allow read, write: if request.auth.uid == userId;
+    }
   
     // Lists can be created by anyone logged in, updated by editors, and deleted by owners
     match /lists/{listId} {

@@ -67,7 +67,7 @@ export const onItemDeleted = onDocumentCreated("lists/{listId}/_itemDeletes/{del
     // Update user
     const completedItems: ShoppingItem[] = deleteData.items.filter((item) => item.completed);
     const lastModifyingUsers = new Set(completedItems.map((item) => item.lastModifiedByUserId));
-    const users = await transaction.get(fs.collection("users").where("id", "in", Array.from(lastModifyingUsers)));
+    const users = await transaction.get(fs.collection("userHistory").where("id", "in", Array.from(lastModifyingUsers)));
 
     const allUserHistoryUpdates: UserHistoryUpdates[] = [];
     const userUpdates: {docRef: DocumentReference, data: UserProfile}[] = [];
@@ -88,7 +88,7 @@ export const onItemDeleted = onDocumentCreated("lists/{listId}/_itemDeletes/{del
         });
       } else {
         userUpdates.push({
-          docRef: fs.collection("users").doc(userId),
+          docRef: fs.collection("userHistory").doc(userId),
           data: {
             lastHistoryUpdate: updateTimestamp,
             hiddenSuggestions: {items: [], categories: []},
@@ -131,9 +131,9 @@ export const onItemDeleted = onDocumentCreated("lists/{listId}/_itemDeletes/{del
 
 async function updateUserHistory(transaction: Transaction, userId: string, items: ShoppingItem[], timestamp: Timestamp) : Promise<UserHistoryUpdates> {
   const fs = admin.firestore();
-  const userDocRef = fs.collection("users").doc(userId);
-  const itemHistoryRef = userDocRef.collection("itemHistory");
-  const categoryHistoryRef = userDocRef.collection("categoryHistory");
+  const userHistoryDocRef = fs.collection("userHistory").doc(userId);
+  const itemHistoryRef = userHistoryDocRef.collection("items");
+  const categoryHistoryRef = userHistoryDocRef.collection("categories");
 
   const result: UserHistoryUpdates = {
     items: [],
