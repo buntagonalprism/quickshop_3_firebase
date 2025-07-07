@@ -1,28 +1,25 @@
-import {command, run, option, oneOf} from "cmd-ts";
+import {command, run} from "cmd-ts";
+import {Env, initializeFirestore, targetEnvironmentOption} from "./common/firebase-init";
 
-const ENV_VALUES = ["local", "dev", "prod"] as const;
-type Env = (typeof ENV_VALUES)[number];
 
 type Args = {
   env: Env;
 }
 
-function main(args: Args) {
+async function main(args: Args) {
   console.log("Loading suggestions... with args:", args);
-}
+  const fs = await initializeFirestore(args.env);
 
+  const lists = await fs.collection("lists").get();
+  console.log(`Found ${lists.docs.length} lists.`);
+}
 
 const cmd = command({
   name: "load-suggestions",
   description: "Load suggestions into the database",
   version: "1.0.0",
   args: {
-    env: option({
-      type: oneOf(ENV_VALUES),
-      long: "env",
-      short: "e",
-      description: "Environment to load suggestions into. Must be one of: " + ENV_VALUES.join(", "),
-    }),
+    env: targetEnvironmentOption,
   },
   handler: (args) => {
     main(args);
