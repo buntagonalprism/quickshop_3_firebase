@@ -1,0 +1,502 @@
+[
+    {
+        "name": "Air freshener",
+        "id": "6JrG6xsyVqNiSiswz079"
+    },
+    {
+        "name": "Asian",
+        "id": "EpAPDmfI5VHAdul7I8ZX"
+    },
+    {
+        "name": "Baby",
+        "id": "5Tgkm4UCREL1M7XwErci"
+    },
+    {
+        "name": "baby food",
+        "id": "TbHaiNfWnEQh18Of9Uwn"
+    },
+    {
+        "name": "Baking",
+        "id": "0m9zmnWH9JMzJMYz99UC"
+    },
+    {
+        "name": "Band aids",
+        "id": "E95Ja9P2UVlvWyBPk0tg"
+    },
+    {
+        "name": "Batteries",
+        "id": "MgiEI4TypsC5qSZRrrkm"
+    },
+    {
+        "name": "BBQ & Picnic",
+        "id": "mqsBNw2jTDM5QdnAgxdg"
+    },
+    {
+        "name": "Bird seed",
+        "id": "2E8FrbOPhnu7LAIOoss7"
+    },
+    {
+        "name": "Biscuits - savoury",
+        "id": "MQJSCHQnmPmvYfkhwew7"
+    },
+    {
+        "name": "Biscuits - sweet",
+        "id": "icoBmWnVoWtwA9rUI1I8"
+    },
+    {
+        "name": "Bodywash",
+        "id": "LmEVIjSU0F2dONcxtgEV"
+    },
+    {
+        "name": "Bread",
+        "id": "RST4j0nc2b5bXY8hWgz1"
+    },
+    {
+        "name": "Breadcrumbs",
+        "id": "JSu70QYU1E7aW1gIS4K5"
+    },
+    {
+        "name": "Cake mix",
+        "id": "T1fusZOAAPbsuySovfp5"
+    },
+    {
+        "name": "Canned fish",
+        "id": "bIfDrJqERhljER1XVPmo"
+    },
+    {
+        "name": "Canned fruit",
+        "id": "fKPq4wKH1JORLmZMkSBo"
+    },
+    {
+        "name": "Canned veg",
+        "id": "6YhNej7NbQ6XdNMvnAFB"
+    },
+    {
+        "name": "Cat food",
+        "id": "gvlAqCuS4yuk4OvIYiwt"
+    },
+    {
+        "name": "Cereal",
+        "id": "emjJThVYMcokX20f4CSY"
+    },
+    {
+        "name": "Chewing gum & mints",
+        "id": "vSlWGnRXQ6uUSv3HnDJL"
+    },
+    {
+        "name": "Chips",
+        "id": "Ruv92B6zB4C75gmyKydP"
+    },
+    {
+        "name": "Chocolate",
+        "id": "F4riaJ7n87GXXq1zzqwd"
+    },
+    {
+        "name": "Cleaning",
+        "id": "veFqhSd1pVkmJvnMDHzi"
+    },
+    {
+        "name": "Cocoa powder",
+        "id": "qhm54tUTNk7UnjPrMa4Y"
+    },
+    {
+        "name": "Coffee",
+        "id": "Hycoq4RDskhvgvW1ZpL9"
+    },
+    {
+        "name": "Cookware",
+        "id": "8DtHdh0znxt0mDEsSlEb"
+    },
+    {
+        "name": "Cordial",
+        "id": "rqNRRWFmuMUvImEC45Ey"
+    },
+    {
+        "name": "Corn starch",
+        "id": "m1ql5IdS7B6dvPqGtMYB"
+    },
+    {
+        "name": "Cosmetics",
+        "id": "mOtGkoDCpVYuNNVqhSsD"
+    },
+    {
+        "name": "Crackers",
+        "id": "YtuMZND7xSXgLHA0WF1U"
+    },
+    {
+        "name": "Deodorant",
+        "id": "UTLox8BZyFavYfE6lmXD"
+    },
+    {
+        "name": "Dishwashing",
+        "id": "NjBC2REe0XfGHkWPzSSH"
+    },
+    {
+        "name": "Dog food",
+        "id": "DfoqJnTfZz0e2cJXDjdX"
+    },
+    {
+        "name": "Dried fruit & nuts",
+        "id": "6vcE3cZSGqdEuFyJQp3P"
+    },
+    {
+        "name": "Drinks",
+        "id": "HaX0rjoL7gSpZ1oogqCg"
+    },
+    {
+        "name": "Eggs",
+        "id": "gsxcNQS7OmvP9fSWQ4Pi"
+    },
+    {
+        "name": "Electrical",
+        "id": "8R6qChyw6WO10MZId8KM"
+    },
+    {
+        "name": "Energy drinks",
+        "id": "ktjlbMFlj6sAUznaNB2v"
+    },
+    {
+        "name": "Flour",
+        "id": "p6w4WOvLdQ63x4ECzvoI"
+    },
+    {
+        "name": "Fly spray",
+        "id": "WKEzyJX94HeKOEEaFr65"
+    },
+    {
+        "name": "Foil & wrap",
+        "id": "fXXGtqpOjdyxzYQV84ng"
+    },
+    {
+        "name": "Fruit juice",
+        "id": "V3RxmdmBq5z7zfu3Jo75"
+    },
+    {
+        "name": "Garbage bags",
+        "id": "16DLEPkdxhtjJtBDl0Vj"
+    },
+    {
+        "name": "Gardening",
+        "id": "uYjU0mrV3vvgjhHTLysr"
+    },
+    {
+        "name": "Gloves",
+        "id": "ERaIMUSHSk2cLdmoNZAb"
+    },
+    {
+        "name": "Golden syrup",
+        "id": "ajQrfXAl5oE7HPorO76M"
+    },
+    {
+        "name": "Gravy & stock",
+        "id": "tpszoZ6H1rwXlqPSfrkN"
+    },
+    {
+        "name": "Hair care",
+        "id": "GBD7JyFvxvjI4IrPo7qI"
+    },
+    {
+        "name": "Handwash",
+        "id": "SNNLuSCpOMKOFi77sm2H"
+    },
+    {
+        "name": "Health & beauty",
+        "id": "kHRkUFY5zOgxLe3hsom8"
+    },
+    {
+        "name": "Health foods",
+        "id": "31pLRa3co81bZNOlJpZo"
+    },
+    {
+        "name": "Herbs & spices",
+        "id": "9jLvpKhJiK1k38XRYPa6"
+    },
+    {
+        "name": "Homewares",
+        "id": "WB9s8IM2Srk0UrnJkse3"
+    },
+    {
+        "name": "Honey",
+        "id": "5S4G2nG41MGG0IYbqcCY"
+    },
+    {
+        "name": "Hoisery}, underware & socks",
+        "id": "Ni8hzFhcda86yHO7mKc0"
+    },
+    {
+        "name": "Ice cream cones",
+        "id": "Z8ic7hOWsD4rumJG8THG"
+    },
+    {
+        "name": "Imported international",
+        "id": "axKXKM1yxhJr9CIatUdj"
+    },
+    {
+        "name": "Indian",
+        "id": "xW00hEPqCm4Jx10e6K5K"
+    },
+    {
+        "name": "Jam",
+        "id": "ZbPhKEXXwetFqeAjCKzW"
+    },
+    {
+        "name": "Jelly",
+        "id": "GM6bkfASwJyLAsTDifLP"
+    },
+    {
+        "name": "Juice",
+        "id": "Q38YNwZZPF8igyF4wqPG"
+    },
+    {
+        "name": "Laundry",
+        "id": "0ZInSKhA8LxAubiMbawV"
+    },
+    {
+        "name": "Lemon juice",
+        "id": "gu7i9TXL7R2MbecD32cN"
+    },
+    {
+        "name": "Light bulbs",
+        "id": "VddPF66SsrHEUyCZRcuP"
+    },
+    {
+        "name": "Longlife milk",
+        "id": "KaHmFv6LZ8au3cot3XVO"
+    },
+    {
+        "name": "Magazines",
+        "id": "T3xN0y3ZRZVTQOj77wrj"
+    },
+    {
+        "name": "Make up",
+        "id": "TRkwgdwOLJmiHvwxpDZc"
+    },
+    {
+        "name": "Maple syrup",
+        "id": "8wTlNLavyp5qMLHLMRY4"
+    },
+    {
+        "name": "Mayonnaise",
+        "id": "bE2SIcudLT64roX8lzbC"
+    },
+    {
+        "name": "Medicinal & health",
+        "id": "gEH4SXtsmKFNR6pkdjJC"
+    },
+    {
+        "name": "Mexican",
+        "id": "yl22BBe7HrscJT1HF8Jo"
+    },
+    {
+        "name": "Mineral water",
+        "id": "lptXSx7H66TTZta9hWdH"
+    },
+    {
+        "name": "Mouth wash",
+        "id": "6b4j2RzsTszeanQgJMAR"
+    },
+    {
+        "name": "Muesli bars",
+        "id": "gckhAj0Q0YYbyMmdsrbO"
+    },
+    {
+        "name": "Napkins",
+        "id": "SRPCGcUG9b37LHUo2lIq"
+    },
+    {
+        "name": "Nappies",
+        "id": "R4Lgj9CYco4n7wB9qenB"
+    },
+    {
+        "name": "Noodles",
+        "id": "aqDMoW3ZkjaFX0fJ65Oc"
+    },
+    {
+        "name": "Noodles - instant",
+        "id": "fPeUqiYCviq0XQ5Jg4Tu"
+    },
+    {
+        "name": "Nuts",
+        "id": "eq2EykE75vwCeC0nbylx"
+    },
+    {
+        "name": "Oats",
+        "id": "osRtFR1FzYUsfLyR0kiK"
+    },
+    {
+        "name": "Oils",
+        "id": "DvyBTFipkbJckN5EQO9j"
+    },
+    {
+        "name": "Pancake mix",
+        "id": "WFsXM5xTuPy2grSJfYRn"
+    },
+    {
+        "name": "Paper plates",
+        "id": "qgxhYqfUTQ2E6kyuUp8s"
+    },
+    {
+        "name": "Paper towels",
+        "id": "uBlkNmDF6MtKFgBkqUiC"
+    },
+    {
+        "name": "Party",
+        "id": "brkLukfQIg5utnO0NPlU"
+    },
+    {
+        "name": "Pasta",
+        "id": "4g4TXD0qIPV8UKlQ8J3u"
+    },
+    {
+        "name": "Pasta sauces",
+        "id": "Twpkd3LwfOSPnP0uFi76"
+    },
+    {
+        "name": "Peanut butter",
+        "id": "BFTTxKn4qc2uuqlt3NcM"
+    },
+    {
+        "name": "Pest control",
+        "id": "1JVGwkPr5CTfYeqTyFIH"
+    },
+    {
+        "name": "Pesto",
+        "id": "F7bR1JKwEcMN7pLVrw2N"
+    },
+    {
+        "name": "Pet needs",
+        "id": "28bFr5HLOclwqEGEobZc"
+    },
+    {
+        "name": "Pickled veg",
+        "id": "sawjneBgs7GXg0YfVvpT"
+    },
+    {
+        "name": "Polenta",
+        "id": "wLwobWus5rqbXXKqNrvM"
+    },
+    {
+        "name": "Popcorn",
+        "id": "ndG5Z6DYkX9kHciLjbUF"
+    },
+    {
+        "name": "Razor blades",
+        "id": "lui5AUoC23HQ4Y5RMlTB"
+    },
+    {
+        "name": "Rice",
+        "id": "TsKCstsWgG2c60k8xah4"
+    },
+    {
+        "name": "Rice crackers",
+        "id": "WthyqwhnBeI0Xc3Gp6ei"
+    },
+    {
+        "name": "Salad dressing",
+        "id": "VtVoOxuPuwBZVhBEQxSr"
+    },
+    {
+        "name": "Salt & pepper",
+        "id": "EPuivzDlS7EEuplsFiM6"
+    },
+    {
+        "name": "Sauces & condiments",
+        "id": "XRdSes2t6XhSNgjXqiyT"
+    },
+    {
+        "name": "Sewing aids",
+        "id": "CwS4ZHFBbN4XoDol592l"
+    },
+    {
+        "name": "Shampoo & conditioner",
+        "id": "sStTfTkxvF2BwVXSbLg3"
+    },
+    {
+        "name": "Shaving",
+        "id": "ZWs4ddeKJFvXf2xgRpT5"
+    },
+    {
+        "name": "Skincare",
+        "id": "GwLe2CqE0qsOEHUaipEi"
+    },
+    {
+        "name": "Snacks",
+        "id": "UNfsDzI3Zxd8oOKmTr0D"
+    },
+    {
+        "name": "Soap & body wash",
+        "id": "qA9SK6n3RsSH8u9QMcxc"
+    },
+    {
+        "name": "Soft drinks",
+        "id": "feLqq54oGm9T6WohPESQ"
+    },
+    {
+        "name": "Soup",
+        "id": "xlKe7FgdDuLvLs2QV4T9"
+    },
+    {
+        "name": "Sports drinks",
+        "id": "gE03jpB6p5t3Vbb4VdeQ"
+    },
+    {
+        "name": "Soup",
+        "id": "TUI7pWhzSBvBLm4leqC6"
+    },
+    {
+        "name": "Soy milk",
+        "id": "I6yMzej3VUSrz6yByOjX"
+    },
+    {
+        "name": "Spreads",
+        "id": "RjG3QgaUXe4WqXCXmPWx"
+    },
+    {
+        "name": "Stationery",
+        "id": "flvBiD9Y9hx9rfg8tHiz"
+    },
+    {
+        "name": "Sugar",
+        "id": "cwK7SVqyNxsVpTcf5SjM"
+    },
+    {
+        "name": "Tea",
+        "id": "nH23YA35joVOY3RW5x9u"
+    },
+    {
+        "name": "Tissues",
+        "id": "bSC946XTL4yPfsctk0id"
+    },
+    {
+        "name": "Toilet paper",
+        "id": "WuRrXhAQzsjBx9ydopJh"
+    },
+    {
+        "name": "Toothpaste",
+        "id": "PEUzmOAOh4RCi9jH9due"
+    },
+    {
+        "name": "Toothpicks",
+        "id": "jd9mbzATDRYLxJjTFVZ2"
+    },
+    {
+        "name": "Toppings",
+        "id": "cvRXnI7gxzI8x9SZq6fn"
+    },
+    {
+        "name": "Vinegar",
+        "id": "qRBbmSpPYIUBx8UIfSfc"
+    },
+    {
+        "name": "Vitamins",
+        "id": "FLmWNGJasGmpmSqm2d8H"
+    },
+    {
+        "name": "Water",
+        "id": "EquYA9xNacyb6Yr3lMVt"
+    },
+    {
+        "name": "Yeast",
+        "id": "g1wMVWjCIce1iX5U3Dw8"
+    }
+]
