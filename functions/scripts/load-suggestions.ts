@@ -23,22 +23,25 @@ interface SuggestionCategory {
 async function main(args: Args) {
   console.log("Loading suggestions... with args:", args);
   const firestore = await initializeFirestore(args.env);
+  await loadLocale(firestore, "en");
+}
 
+async function loadLocale(firestore: FirebaseFirestore.Firestore, locale: string) {
   const timestampMs = Date.now();
 
   // Load categories from JSON file
-  const categoriesPath = path.join(__dirname, "../../suggestions/en-AU/categories.json");
+  const categoriesPath = path.join(__dirname, `../../suggestions/${locale}/categories.json`);
   const categories: SuggestionCategory[] = JSON.parse(fs.readFileSync(categoriesPath, "utf8"));
   console.log(`Loaded ${categories.length} categories`);
 
   // Load items from JSON file
-  const itemsPath = path.join(__dirname, "../../suggestions/en-AU/items.json");
+  const itemsPath = path.join(__dirname, `../../suggestions/${locale}/items.json`);
   const items: SuggestionItem[] = JSON.parse(fs.readFileSync(itemsPath, "utf8"));
   console.log(`Loaded ${items.length} items`);
 
-  // Store categories in Firestore at /suggestions/categories/en-AU
+  // Store categories in Firestore at /suggestions/categories/<locale>
   console.log("Storing categories in Firestore...");
-  const categoriesCollection = firestore.collection("suggestions/categories/en-AU");
+  const categoriesCollection = firestore.collection(`suggestions/categories/${locale}`);
   const updatedCategoryIds = await Promise.all(categories.map(async (category) => {
     if (category.id) {
       // If the category has an ID, update it instead of adding a new one
@@ -59,7 +62,7 @@ async function main(args: Args) {
   const categoriesDoc = firestore.collection("suggestions").doc("categories");
   await categoriesDoc.set({
     lastUpdated: {
-      "en-AU": timestampMs,
+      [locale]: timestampMs,
     },
   }, {merge: true}); // Update the categories document with the timestamp
   for (let i = 0; i < categories.length; i++) {
@@ -69,9 +72,9 @@ async function main(args: Args) {
 
   console.log("Categories stored successfully!");
 
-  // Store items in Firestore at /suggestions/items/en-AU
+  // Store items in Firestore at /suggestions/items/en
   console.log("Storing items in Firestore...");
-  const itemsCollection = firestore.collection("suggestions/items/en-AU");
+  const itemsCollection = firestore.collection(`suggestions/items/${locale}`);
   const updatedItemIds = await Promise.all(items.map(async (item) => {
     if (item.id) {
       // If the item has an ID, update it instead of adding a new one
@@ -94,7 +97,7 @@ async function main(args: Args) {
   const itemsDoc = firestore.collection("suggestions").doc("items");
   await itemsDoc.set({
     lastUpdated: {
-      "en-AU": timestampMs,
+      [locale]: timestampMs,
     },
   }, {merge: true}); // Update the items document with the timestamp
   for (let i = 0; i < items.length; i++) {

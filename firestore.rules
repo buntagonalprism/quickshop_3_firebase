@@ -41,6 +41,11 @@ service cloud.firestore {
       allow list, delete: if request.auth.uid == resource.data.inviterId;
       allow get: if request.auth.uid != null;
     }
+
+    // Anyone can read suggestions
+    match /suggestions/{document=**} {
+      allow read: if true;
+    }
   
   	// Otherwise disallow all access
     match /{document=**} {
