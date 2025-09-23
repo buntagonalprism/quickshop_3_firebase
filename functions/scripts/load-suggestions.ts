@@ -26,17 +26,42 @@ async function main(args: Args) {
   await loadLocale(firestore, "en");
 }
 
+function parseCsv<T>(csv: string): T[] {
+  const lines = csv.split("\n").filter((line) => line.trim() !== "");
+  const headers = lines[0].split(",").map((header) => header.trim());
+  const json = lines.slice(1).map((line) => {
+    const values = line.split(",").map((value) => value.trim());
+    const obj: Record<string, string> = {};
+    headers.forEach((header, index) => {
+      obj[header] = values[index];
+    });
+    return obj as T;
+  });
+  return json;
+}
+
+function toCsv<T extends object>(data: T[]): string {
+  if (data.length === 0) {
+    return "";
+  }
+  const headers = Object.keys(data[0]);
+  const lines = data.map((item) => {
+    return headers.map((header) => (item as Record<string, unknown>)[header]).join(",");
+  });
+  return [headers.join(","), ...lines].join("\n");
+}
+
 async function loadLocale(firestore: FirebaseFirestore.Firestore, locale: string) {
   const timestampMs = Date.now();
 
   // Load categories from JSON file
-  const categoriesPath = path.join(__dirname, `../../suggestions/${locale}/categories.json`);
-  const categories: SuggestionCategory[] = JSON.parse(fs.readFileSync(categoriesPath, "utf8"));
+  const categoriesPath = path.join(__dirname, `../../suggestions/${locale}/categories.csv`);
+  const categories = parseCsv<SuggestionCategory>(fs.readFileSync(categoriesPath, "utf8"));
   console.log(`Loaded ${categories.length} categories`);
 
   // Load items from JSON file
-  const itemsPath = path.join(__dirname, `../../suggestions/${locale}/items.json`);
-  const items: SuggestionItem[] = JSON.parse(fs.readFileSync(itemsPath, "utf8"));
+  const itemsPath = path.join(__dirname, `../../suggestions/${locale}/items.csv`);
+  const items = parseCsv<SuggestionItem>(fs.readFileSync(itemsPath, "utf8"));
   console.log(`Loaded ${items.length} items`);
 
   // Store categories in Firestore at /suggestions/categories/<locale>
@@ -68,7 +93,7 @@ async function loadLocale(firestore: FirebaseFirestore.Firestore, locale: string
   for (let i = 0; i < categories.length; i++) {
     categories[i].id = updatedCategoryIds[i]; // Update the category with the new ID
   }
-  fs.writeFileSync(categoriesPath, JSON.stringify(categories, null, 4)); // Save updated categories with IDs
+  fs.writeFileSync(categoriesPath, toCsv(categories)); // Save updated categories with IDs
 
   console.log("Categories stored successfully!");
 
@@ -103,7 +128,7 @@ async function loadLocale(firestore: FirebaseFirestore.Firestore, locale: string
   for (let i = 0; i < items.length; i++) {
     items[i].id = updatedItemIds[i]; // Update the item with the new ID
   }
-  fs.writeFileSync(itemsPath, JSON.stringify(items, null, 4)); // Save updated items with IDs
+  fs.writeFileSync(itemsPath, toCsv(items)); // Save updated items with IDs
 
   console.log("Items stored successfully!");
 
