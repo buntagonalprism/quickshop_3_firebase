@@ -9,15 +9,41 @@ import {CollectionReference, DocumentReference, QueryDocumentSnapshot, Transacti
 import {UserProfile, userProfileSchema} from "../models/user-profile";
 import {Temporal} from "temporal-polyfill";
 
+
+const collections = {
+  lists: "lists",
+  listItems: "items",
+  listItemDeletes: "_itemDeletes",
+  users: "users",
+  userItemHistory: "itemHistory",
+  userCategoryHistory: "categoryHistory",
+  invites: "invites",
+};
+
+const refs = {
+  // Users and their history
+  users: admin.firestore().collection(collections.users),
+  user: (userId: string) => refs.users.doc(userId),
+  userItemHistory: (userId: string) => refs.user(userId).collection(collections.userItemHistory),
+  userCategoryHistory: (userId: string) => refs.user(userId).collection(collections.userCategoryHistory),
+  // Lists and their items
+  lists: admin.firestore().collection(collections.lists),
+  list: (listId: string) => refs.lists.doc(listId),
+  listItems: (listId: string) => refs.list(listId).collection(collections.listItems),
+  listItemDeletes: (listId: string) => refs.list(listId).collection(collections.listItemDeletes),
+  // Invites
+  invites: admin.firestore().collection(collections.invites),
+};
+
 // When a list is renamed, rename all the invites for that list
-export const onListNameChanged = onDocumentUpdated("lists/{listId}", async (event) => {
+export const onListNameChanged = onDocumentUpdated(`/${collections.lists}/{listId}`, async (event) => {
   const oldListName = event.data?.before.get("name");
   const newListName = event.data?.after.get("name");
   if (oldListName === newListName) {
     return;
   }
   const listId = event.params.listId;
-  const invites = await admin.firestore().collection("invites").where("listId", "==", listId).get();
+  const invites = await refs.invites.where("listId", "==", listId).get();
   const batch = admin.firestore().batch();
   invites.forEach((invite) => {
     batch.update(invite.ref, {listName: newListName});
@@ -26,10 +52,10 @@ export const onListNameChanged = onDocumentUpdated("lists/{listId}", async (even
 });
 
 // When a list is deleted, delete all the invites for that list and delete all list items
-export const onListDeleted = onDocumentDeleted("lists/{listId}", async (event) => {
+export const onListDeleted = onDocumentDeleted(`/${collections.lists}/{listId}`, async (event) => {
   const listId = event.params.listId;
-  const invites = await admin.firestore().collection("invites").where("listId", "==", listId).get();
-  const items = await admin.firestore().collection("lists").doc(listId).collection("items").get();
+  const invites = await refs.invites.where("listId", "==", listId).get();
+  const items = await refs.listItems(listId).get();
   const batch = admin.firestore().batch();
   invites.forEach((invite) => {
     batch.delete(invite.ref);
@@ -44,13 +70,13 @@ export const onListDeleted = onDocumentDeleted("lists/{listId}", async (event) =
 // guarantee consistency in case of concurrent deletes. This could result in the list itemCount
 // being decremented twice for the same item. This function corrects the count by checking the
 // item count in a transaction, and updating the list if needed.
-export const onItemDeleted = onDocumentCreated("lists/{listId}/_itemDeletes/{deleteId}", async (event) => {
+export const onItemDeleted = onDocumentCreated(`/${collections.lists}/{listId}/${collections.listItemDeletes}/{deleteId}`, async (event) => {
   const listId = event.params.listId;
   const fs = admin.firestore();
-  const listRef = fs.collection("lists").doc(listId);
+  const listRef = refs.list(listId);
   const deleteId = event.params.deleteId;
-  const deleteRef = fs.collection("lists").doc(listId).collection("_itemDeletes").doc(deleteId);
-  const itemCountQuery = fs.collection("lists").doc(listId).collection("items").count();
+  const deleteRef = refs.listItemDeletes(listId).doc(deleteId);
+  const itemCountQuery = refs.listItems(listId).count();
 
   await fs.runTransaction(async (transaction) => {
     const [listDoc, deleteSnap, itemCountSnap] = await Promise.all([
@@ -68,7 +94,7 @@ export const onItemDeleted = onDocumentCreated("lists/{listId}/_itemDeletes/{del
     // Update user
     const completedItems: ShoppingItem[] = deleteData.items.filter((item) => item.completed);
     const lastModifyingUsers = new Set(completedItems.map((item) => item.lastModifiedByUserId));
-    const users = await transaction.get(fs.collection("userProfiles").where("id", "in", Array.from(lastModifyingUsers)));
+    const users = await transaction.get(refs.users.where("id", "in", Array.from(lastModifyingUsers)));
 
     const allUserHistoryUpdates: UserHistoryUpdates[] = [];
     const userUpdates: {docRef: DocumentReference, data: UserProfile}[] = [];
@@ -89,7 +115,7 @@ export const onItemDeleted = onDocumentCreated("lists/{listId}/_itemDeletes/{del
         });
       } else {
         userUpdates.push({
-          docRef: fs.collection("userProfiles").doc(userId),
+          docRef: refs.user(userId),
           data: {
             lastHistoryUpdate: updateTimestamp.epochMilliseconds,
             hiddenSuggestions: {items: [], categories: []},
@@ -131,10 +157,8 @@ export const onItemDeleted = onDocumentCreated("lists/{listId}/_itemDeletes/{del
 
 
 async function updateUserHistory(transaction: Transaction, userId: string, items: ShoppingItem[], timestamp: Temporal.Instant) : Promise<UserHistoryUpdates> {
-  const fs = admin.firestore();
-  const userHistoryDocRef = fs.collection("userProfiles").doc(userId);
-  const itemHistoryRef = userHistoryDocRef.collection("items");
-  const categoryHistoryRef = userHistoryDocRef.collection("categories");
+  const itemHistoryRef = refs.userItemHistory(userId);
+  const categoryHistoryRef = refs.userCategoryHistory(userId);
 
   const result: UserHistoryUpdates = {
     items: [],
