@@ -6,8 +6,11 @@ service cloud.firestore {
     	return get(/databases/$(database)/documents/lists/$(listId)).data
     }
 
-    // Users can create and read their own profiles
-    match /userProfiles/{userId}/{document=**} {
+    // Users can create and read their own user profiles and all nested documents
+    match /users/{userId} {
+      allow read, write: if request.auth.uid == userId;
+    }
+    match /users/{userId}/{document=**} {
       allow read, write: if request.auth.uid == userId;
     }
   
