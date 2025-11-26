@@ -6,13 +6,8 @@ service cloud.firestore {
     	return get(/databases/$(database)/documents/lists/$(listId)).data
     }
 
-    // Users can create and read their own user document
-    match /users/{userId} {
-      allow read, write: if request.auth.uid == userId;
-    }
-
-    // Users can create and read their own history
-    match /userHistory/{userId}/{document=**} {
+    // Users can create and read their own profiles
+    match /userProfiles/{userId}/{document=**} {
       allow read, write: if request.auth.uid == userId;
     }
   
