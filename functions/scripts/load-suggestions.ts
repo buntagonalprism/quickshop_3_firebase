@@ -2,6 +2,8 @@ import {command, run} from "cmd-ts";
 import {Env, initializeFirestore, targetEnvironmentOption} from "./common/firebase-init";
 import * as fs from "fs";
 import * as path from "path";
+import {parse} from "csv-parse/sync";
+import {stringify} from "csv-stringify/sync";
 
 
 type Args = {
@@ -26,29 +28,15 @@ async function main(args: Args) {
   await loadLocale(firestore, "en");
 }
 
-function parseCsv<T>(csv: string): T[] {
-  const lines = csv.split("\n").filter((line) => line.trim() !== "");
-  const headers = lines[0].split(",").map((header) => header.trim());
-  const json = lines.slice(1).map((line) => {
-    const values = line.split(",").map((value) => value.trim());
-    const obj: Record<string, string> = {};
-    headers.forEach((header, index) => {
-      obj[header] = values[index];
-    });
-    return obj as T;
-  });
-  return json;
+function readCSV<T>(path: string): T[] {
+  const file = fs.readFileSync(path, "utf8");
+  const records = parse(file, {columns: true, trim: true, skip_empty_lines: true});
+  return records.map((record) => record as T);
 }
 
-function toCsv<T extends object>(data: T[]): string {
-  if (data.length === 0) {
-    return "";
-  }
-  const headers = Object.keys(data[0]);
-  const lines = data.map((item) => {
-    return headers.map((header) => (item as Record<string, unknown>)[header]).join(",");
-  });
-  return [headers.join(","), ...lines].join("\n");
+function writeCSV<T extends object>(path: string, data: T[]): void {
+  const csv = stringify(data, {header: true});
+  fs.writeFileSync(path, csv, "utf8");
 }
 
 async function loadLocale(firestore: FirebaseFirestore.Firestore, locale: string) {
@@ -56,12 +44,12 @@ async function loadLocale(firestore: FirebaseFirestore.Firestore, locale: string
 
   // Load categories from JSON file
   const categoriesPath = path.join(__dirname, `../../suggestions/${locale}/categories.csv`);
-  const categories = parseCsv<SuggestionCategory>(fs.readFileSync(categoriesPath, "utf8"));
+  const categories = readCSV<SuggestionCategory>(categoriesPath);
   console.log(`Loaded ${categories.length} categories`);
 
   // Load items from JSON file
   const itemsPath = path.join(__dirname, `../../suggestions/${locale}/items.csv`);
-  const items = parseCsv<SuggestionItem>(fs.readFileSync(itemsPath, "utf8"));
+  const items = readCSV<SuggestionItem>(itemsPath);
   console.log(`Loaded ${items.length} items`);
 
   // Store categories in Firestore at /suggestions/categories/<locale>
@@ -93,7 +81,7 @@ async function loadLocale(firestore: FirebaseFirestore.Firestore, locale: string
   for (let i = 0; i < categories.length; i++) {
     categories[i].id = updatedCategoryIds[i]; // Update the category with the new ID
   }
-  fs.writeFileSync(categoriesPath, toCsv(categories)); // Save updated categories with IDs
+  writeCSV(categoriesPath, categories); // Save updated categories with IDs
 
   console.log("Categories stored successfully!");
 
@@ -128,7 +116,7 @@ async function loadLocale(firestore: FirebaseFirestore.Firestore, locale: string
   for (let i = 0; i < items.length; i++) {
     items[i].id = updatedItemIds[i]; // Update the item with the new ID
   }
-  fs.writeFileSync(itemsPath, toCsv(items)); // Save updated items with IDs
+  writeCSV(itemsPath, items); // Save updated items with IDs
 
   console.log("Items stored successfully!");
 
