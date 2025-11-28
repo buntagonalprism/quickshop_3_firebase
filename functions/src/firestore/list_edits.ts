@@ -22,17 +22,17 @@ const collections = {
 
 const refs = {
   // Users and their history
-  users: admin.firestore().collection(collections.users),
-  user: (userId: string) => refs.users.doc(userId),
+  users: () => admin.firestore().collection(collections.users),
+  user: (userId: string) => refs.users().doc(userId),
   userItemHistory: (userId: string) => refs.user(userId).collection(collections.userItemHistory),
   userCategoryHistory: (userId: string) => refs.user(userId).collection(collections.userCategoryHistory),
   // Lists and their items
-  lists: admin.firestore().collection(collections.lists),
-  list: (listId: string) => refs.lists.doc(listId),
+  lists: () => admin.firestore().collection(collections.lists),
+  list: (listId: string) => refs.lists().doc(listId),
   listItems: (listId: string) => refs.list(listId).collection(collections.listItems),
   listItemDeletes: (listId: string) => refs.list(listId).collection(collections.listItemDeletes),
   // Invites
-  invites: admin.firestore().collection(collections.invites),
+  invites: () => admin.firestore().collection(collections.invites),
 };
 
 // When a list is renamed, rename all the invites for that list
@@ -43,7 +43,7 @@ export const onListNameChanged = onDocumentUpdated(`/${collections.lists}/{listI
     return;
   }
   const listId = event.params.listId;
-  const invites = await refs.invites.where("listId", "==", listId).get();
+  const invites = await refs.invites().where("listId", "==", listId).get();
   const batch = admin.firestore().batch();
   invites.forEach((invite) => {
     batch.update(invite.ref, {listName: newListName});
@@ -54,7 +54,7 @@ export const onListNameChanged = onDocumentUpdated(`/${collections.lists}/{listI
 // When a list is deleted, delete all the invites for that list and delete all list items
 export const onListDeleted = onDocumentDeleted(`/${collections.lists}/{listId}`, async (event) => {
   const listId = event.params.listId;
-  const invites = await refs.invites.where("listId", "==", listId).get();
+  const invites = await refs.invites().where("listId", "==", listId).get();
   const items = await refs.listItems(listId).get();
   const batch = admin.firestore().batch();
   invites.forEach((invite) => {
@@ -94,7 +94,7 @@ export const onItemDeleted = onDocumentCreated(`/${collections.lists}/{listId}/$
     // Update user
     const completedItems: ShoppingItem[] = deleteData.items.filter((item) => item.completed);
     const lastModifyingUsers = new Set(completedItems.map((item) => item.lastModifiedByUserId));
-    const users = await transaction.get(refs.users.where("id", "in", Array.from(lastModifyingUsers)));
+    const users = await transaction.get(refs.users().where("id", "in", Array.from(lastModifyingUsers)));
 
     const allUserHistoryUpdates: UserHistoryUpdates[] = [];
     const userUpdates: {docRef: DocumentReference, data: UserProfile}[] = [];
