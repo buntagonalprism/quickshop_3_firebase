@@ -7,7 +7,7 @@ export const hiddenSuggestionsSchema = z.object({
 
 export const userProfileSchema = z.object({
   lastHistoryUpdate: z.number(),
-  hiddenSuggestions: hiddenSuggestionsSchema,
+  lastSuggestionsHidden: z.number(),
 });
 
 export type UserProfile = z.infer<typeof userProfileSchema>;
