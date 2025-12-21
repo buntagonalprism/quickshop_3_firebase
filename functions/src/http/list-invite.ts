@@ -2,7 +2,7 @@ import {onRequest} from "firebase-functions/https";
 import {logger} from "firebase-functions/v2";
 import * as admin from "firebase-admin";
 import {FieldValue} from "firebase-admin/firestore";
-import validateFirestoreToken from "./validate_token";
+import validateFirestoreToken from "./validate-token";
 import {Editor} from "../types/editor";
 
 // When a user accepts a list invite, add them to the list's editors

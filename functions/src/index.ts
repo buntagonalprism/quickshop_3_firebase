@@ -6,8 +6,10 @@ import * as admin from "firebase-admin";
 setGlobalOptions({region: "australia-southeast1"});
 
 // Export functions from other files
-export {acceptListInvite, leaveList} from "./http/list_invite";
-export {onListNameChanged, onListDeleted, onItemDeleted} from "./firestore/list_edits";
+export {onUserCreated} from "./auth/user-creation";
+export {createUser} from "./http/create-user";
+export {acceptListInvite, leaveList} from "./http/list-invite";
+export {onListNameChanged, onListDeleted, onItemDeleted} from "./firestore/list-edits";
 
 // Initialise the connection to Firebase. This only needs to be done once.
 admin.initializeApp();
