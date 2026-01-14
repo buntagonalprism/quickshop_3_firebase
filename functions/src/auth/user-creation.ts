@@ -6,7 +6,7 @@ import {UserProfile} from "../models/user-profile";
 export async function createUserProfile(userId: string): Promise<void> {
   const emptyUserProfile: UserProfile = {
     lastHistoryUpdate: 0,
-    lastSuggestionsHidden: 0,
+    hiddenSuggestionsVersion: 0,
   };
 
   await admin.firestore()

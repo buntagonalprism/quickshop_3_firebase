@@ -118,7 +118,7 @@ export const onItemDeleted = onDocumentCreated(`/${collections.lists}/{listId}/$
           docRef: refs.user(userId),
           data: {
             lastHistoryUpdate: updateTimestamp.epochMilliseconds,
-            lastSuggestionsHidden: 0,
+            hiddenSuggestionsVersion: 0,
           } as UserProfile,
         });
       }
