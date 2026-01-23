@@ -8,9 +8,9 @@ The Google Cloud CLI tool - `gcloud`, can be used to generate an ADC json file w
 To execute a script:
 1. Install the [gcloud](https://cloud.google.com/sdk/docs/install) CLI
 2. Login and create the ADC `gcloud auth application-default login`. It does not matter which project is selected by default, only that the account you log into has sufficient access to the Firebase project you want to target
-3. Run a script using `npx ts-node <script-name>.ts -e <env>`. Explanation:
-    - `npx` is the node package executor, that can be used to execute NodeJS packages. It is an alternative to the previously common approach of installing packages globally. 
-    - `ts-node` allows on-the-fly execution of typescript files by the NodeJS runtime, without needing a compilation step
+3. Run a script using `npx tsx <script-name>.ts -e <env>`. Explanation:
+    - `npx` is the node package executor, that can be used to execute NodeJS packages. It is an alternative to the previously common approach of installing packages globally.
+    - `tsx` stands for [Typescript Execute](https://tsx.is/), which can do just-in-time compilation of typescript files to execute them in the Node JS engine without a seperate compilation step
     - `-e <env>` is common in most scripts, requiring the target environment (e.g. 'dev', 'prod') to be passed in
 
 
