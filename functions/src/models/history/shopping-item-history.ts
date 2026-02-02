@@ -3,7 +3,7 @@ import {z} from "zod";
 export const shoppingItemHistorySchema = z.object({
   name: z.string(),
   nameLower: z.string(),
-  categories: z.array(z.string()),
+  category: z.string(),
   lastUsed: z.number(),
   usageCount: z.number(),
 });

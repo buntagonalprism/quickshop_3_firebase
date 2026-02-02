@@ -97,7 +97,7 @@ export const onItemDeleted = onDocumentCreated(`/${collections.lists}/{listId}/$
     const users = await transaction.get(refs.users().where("id", "in", Array.from(lastModifyingUsers)));
 
     const allUserHistoryUpdates: UserHistoryUpdates[] = [];
-    const userUpdates: {docRef: DocumentReference, data: UserProfile}[] = [];
+    const userUpdates: { docRef: DocumentReference, data: UserProfile }[] = [];
 
     for (const userId of lastModifyingUsers) {
       let updateTimestamp: Temporal.Instant = Temporal.Now.instant();
@@ -156,7 +156,7 @@ export const onItemDeleted = onDocumentCreated(`/${collections.lists}/{listId}/$
 });
 
 
-async function updateUserHistory(transaction: Transaction, userId: string, items: ShoppingItem[], timestamp: Temporal.Instant) : Promise<UserHistoryUpdates> {
+async function updateUserHistory(transaction: Transaction, userId: string, items: ShoppingItem[], timestamp: Temporal.Instant): Promise<UserHistoryUpdates> {
   const itemHistoryRef = refs.userItemHistory(userId);
   const categoryHistoryRef = refs.userCategoryHistory(userId);
 
@@ -168,7 +168,7 @@ async function updateUserHistory(transaction: Transaction, userId: string, items
   // Get existing item and category history documents for the user
   const [itemHistorySnap, categoryHistorySnap] = await Promise.all([
     getAllWhereIn(transaction, itemHistoryRef, "nameLower", items.map((item) => item.product.toLowerCase())),
-    getAllWhereIn(transaction, categoryHistoryRef, "nameLower", Array.from(new Set(items.flatMap((item) => item.categories))).map((cat) => cat.toLowerCase())),
+    getAllWhereIn(transaction, categoryHistoryRef, "nameLower", items.map((item) => item.category.toLowerCase())),
   ]);
 
 
@@ -191,7 +191,7 @@ async function updateUserHistory(transaction: Transaction, userId: string, items
         itemHistory = {
           name: item.product,
           nameLower: itemLower,
-          categories: item.categories,
+          category: item.category,
           lastUsed: timestamp.epochMilliseconds,
           usageCount: 1,
         };
@@ -201,30 +201,28 @@ async function updateUserHistory(transaction: Transaction, userId: string, items
 
 
     // Update or create category history entries
-    for (const category of item.categories) {
-      const categoryLower = category.toLowerCase();
-      const existingCategoryUpdate = result.categories.find((c) => c.data.nameLower === categoryLower);
-      if (existingCategoryUpdate) {
-        existingCategoryUpdate.data.lastUsed = timestamp.epochMilliseconds;
-        existingCategoryUpdate.data.usageCount += 1;
+    const categoryLower = item.category.toLowerCase();
+    const existingCategoryUpdate = result.categories.find((c) => c.data.nameLower === categoryLower);
+    if (existingCategoryUpdate) {
+      existingCategoryUpdate.data.lastUsed = timestamp.epochMilliseconds;
+      existingCategoryUpdate.data.usageCount += 1;
+    } else {
+      const existingCategoryDoc = categoryHistorySnap.find((doc) => doc.data().nameLower === categoryLower);
+      if (existingCategoryDoc) {
+        const existingCategory = shoppingCategoryHistorySchema.parse(existingCategoryDoc.data());
+        existingCategory.lastUsed = timestamp.epochMilliseconds;
+        existingCategory.usageCount += 1;
+        result.categories.push({ref: existingCategoryDoc.ref, data: existingCategory});
       } else {
-        const existingCategoryDoc = categoryHistorySnap.find((doc) => doc.data().nameLower === categoryLower);
-        if (existingCategoryDoc) {
-          const existingCategory = shoppingCategoryHistorySchema.parse(existingCategoryDoc.data());
-          existingCategory.lastUsed = timestamp.epochMilliseconds;
-          existingCategory.usageCount += 1;
-          result.categories.push({ref: existingCategoryDoc.ref, data: existingCategory});
-        } else {
-          result.categories.push({
-            ref: categoryHistoryRef.doc(),
-            data: {
-              name: category,
-              nameLower: categoryLower,
-              lastUsed: timestamp.epochMilliseconds,
-              usageCount: 1,
-            },
-          });
-        }
+        result.categories.push({
+          ref: categoryHistoryRef.doc(),
+          data: {
+            name: item.category,
+            nameLower: categoryLower,
+            lastUsed: timestamp.epochMilliseconds,
+            usageCount: 1,
+          },
+        });
       }
     }
   }
@@ -254,6 +252,6 @@ function maxInstant(a: Temporal.Instant, b: Temporal.Instant): Temporal.Instant 
 }
 
 type UserHistoryUpdates = {
-  items: {ref: DocumentReference, data: ShoppingItemHistory}[];
-  categories: {ref: DocumentReference, data: ShoppingCategoryHistory}[];
+  items: { ref: DocumentReference, data: ShoppingItemHistory }[];
+  categories: { ref: DocumentReference, data: ShoppingCategoryHistory }[];
 }
