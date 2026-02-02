@@ -1,0 +1,27 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../functions"
+		}
+	],
+	"settings": {
+		"window.title": "Quickshop Firebase",
+		"workbench.colorCustomizations": {
+			"titleBar.activeBackground": "#14143b",
+			"titleBar.inactiveBackground": "#14143b"
+		},
+		"[typescript]": {
+			"editor.formatOnSave": true,
+			"editor.defaultFormatter": "dbaeumer.vscode-eslint",
+			"editor.tabSize": 2,
+			"editor.insertSpaces": true,
+			"files.eol": "\n",
+			"editor.codeActionsOnSave": {
+				"source.fixAll.eslint": "always"
+			}
+		}
+	}
+}
