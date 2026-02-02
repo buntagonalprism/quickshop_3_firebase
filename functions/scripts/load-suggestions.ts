@@ -13,8 +13,7 @@ type Args = {
 interface SuggestionItem {
   id: string | undefined;
   item: string;
-  category: string | undefined;
-  categories?: string[] | undefined;
+  category: string;
 }
 
 interface SuggestionCategory {
@@ -93,7 +92,7 @@ async function loadLocale(firestore: FirebaseFirestore.Firestore, locale: string
       // If the item has an ID, update it instead of adding a new one
       await itemsCollection.doc(item.id).set({
         name: item.item,
-        categories: item.category ? [item.category] : (item.categories || []),
+        category: item.category,
         updated: timestampMs,
       }, {merge: true});
       return item.id;
@@ -101,7 +100,7 @@ async function loadLocale(firestore: FirebaseFirestore.Firestore, locale: string
       // If the item does not have an ID, add it as a new document
       const docRef = await itemsCollection.add({
         name: item.item,
-        categories: item.category ? [item.category] : (item.categories || []),
+        category: item.category,
         updated: timestampMs,
       });
       return docRef.id; // Return the newly created document ID
