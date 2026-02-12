@@ -6,6 +6,7 @@ export const shoppingItemHistorySchema = z.object({
   category: z.string(),
   lastUsed: z.number(),
   usageCount: z.number(),
+  deleted: z.boolean(),
 });
 
 export type ShoppingItemHistory = z.infer<typeof shoppingItemHistorySchema>;

@@ -186,6 +186,10 @@ async function updateUserHistory(transaction: Transaction, userId: string, items
         itemHistory = shoppingItemHistorySchema.parse(itemHistoryDoc.data());
         itemHistory.lastUsed = timestamp.epochMilliseconds;
         itemHistory.usageCount += 1;
+        // If the user had deleted the history, but then created the same item again, we should
+        // start showing it once more. If they really want it deleted, they'll have to delete it
+        // again.
+        itemHistory.deleted = false;
         result.items.push({ref: itemHistoryDoc.ref, data: itemHistory});
       } else {
         itemHistory = {
@@ -194,6 +198,7 @@ async function updateUserHistory(transaction: Transaction, userId: string, items
           category: item.category,
           lastUsed: timestamp.epochMilliseconds,
           usageCount: 1,
+          deleted: false,
         };
         result.items.push({ref: itemHistoryRef.doc(), data: itemHistory});
       }
@@ -212,6 +217,7 @@ async function updateUserHistory(transaction: Transaction, userId: string, items
         const existingCategory = shoppingCategoryHistorySchema.parse(existingCategoryDoc.data());
         existingCategory.lastUsed = timestamp.epochMilliseconds;
         existingCategory.usageCount += 1;
+        existingCategory.deleted = false;
         result.categories.push({ref: existingCategoryDoc.ref, data: existingCategory});
       } else {
         result.categories.push({
@@ -221,6 +227,7 @@ async function updateUserHistory(transaction: Transaction, userId: string, items
             nameLower: categoryLower,
             lastUsed: timestamp.epochMilliseconds,
             usageCount: 1,
+            deleted: false,
           },
         });
       }
