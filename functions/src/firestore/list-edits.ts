@@ -129,7 +129,7 @@ export const onItemDeleted = onDocumentCreated(`/${collections.lists}/{listId}/$
 
     // Add all the updates to the transaction
     for (const userUpdate of userUpdates) {
-      transaction.set(userUpdate.docRef, userUpdate.data);
+      transaction.set(userUpdate.docRef, userUpdate.data, {merge: true});
     }
     for (const historyUpdates of allUserHistoryUpdates) {
       for (const itemUpdate of historyUpdates.items) {
