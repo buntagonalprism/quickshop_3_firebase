@@ -1,46 +1,128 @@
 id,item,category
-1FDURYiDsm5jAJWC5wpx,Apples,Fresh Fruit & Vegetables
-FgcX1faBqKXuXsLLxI2N,Bananas,Fresh Fruit & Vegetables
-3oYzcHyu4WjAZIaa5BQ8,Oranges,Fresh Fruit & Vegetables
-QdlunjltzueIhogv2jb8,Pears,Fresh Fruit & Vegetables
-ABChUHQVVKEVVzbAlsET,Potatoes,Fresh Fruit & Vegetables
-A8zVeWuZfTfqjZECYFxq,Carrots,Fresh Fruit & Vegetables
-GGILu3fGkJk7zLj5WhGX,Broccoli,Fresh Fruit & Vegetables
-UzFuCenqUNlhrWhABy42,Tomatoes,Fresh Fruit & Vegetables
-xnBBNjvtNNGfWwTBqyiJ,Lettuce,Fresh Fruit & Vegetables
-irgwwPbqcVaXpOLxqadr,Cucumbers,Fresh Fruit & Vegetables
-ZFqFhE7EHU27gbXR1Vg4,Onions,Fresh Fruit & Vegetables
-p6ygQyxaKXUIheULgmcT,Garlic,Fresh Fruit & Vegetables
-HNTMtYq7dnJTAHGh6Wjp,Capsicums,Fresh Fruit & Vegetables
-lTHQZeP3MKVNojuC2PTk,Milk,Dairy
-qkUJEbqAGW4lKANtxcw2,Bread,Bread
-t7rMxN1nWu7rycTBMWoS,Wraps,Bread
-a7R97lcANxjtCX49DLZt,Flat bread,Bread
-izIQdp4WPIxnkmnYtE6N,Bread rolls,Bread
-ZtDpc3ytF6ySEmQVZZQn,Eggs,Eggs
-XItTrX5Y2F4bfK8kEbEk,Butter,Dairy
-WcrZbbq5Au1YKALx1kmF,Cheese,Dairy
-KCYuISseANTaRdjbDymL,Yogurt,Dairy
-OOrARwUMpYaq7cbY0inr,Chicken,Meat
-J1RIyAe3hLcPkcBVIGuh,Chicken breast,Meat
-55qkJnPwdEZynnoInqNu,Chicken thigh,Meat
-qtdIu3C59Onmf0pF7H02,Chicken tenderloin,Meat
-inQ8EPu3HWHx2knXyBLl,Beef,Meat
-1zgP254XjIjUkmk9sVJ7,Beef mince,Meat
-b9dus3FYSO03ux3Zm3KA,Pork,Meat
-QSueUy63fJcQPJJtFXdj,Pork chops,Meat
-sX7VHObnpNMrnwXOWP0z,Fish,Seafood
-X3Qvk3IJU72b6cq1kcij,Rice,Asian
-nc1VeKoANARCJ6o8pyYc,Pasta,Pasta
-Cx3IAkRFoSrV8NzyJxYZ,Peanut Butter,Spreads
-NJXZsp3j5PnkT5FSRtPd,Jam,Spreads
-3HkSm71Q5PXhDG4GvANd,Cereal,Cereal
-4iUl97UxPG9W9T8hOIe2,Oatmeal,Cereal
-agrEwX0Tc5g8WfxWopZr,Granola Bars,Muesli Bars
-qHBWdgM4ekn5oo1k91E6,Chips,Chips
-HZCjDoCNY8Rsu1MILpKA,Salsa,Mexican
-85mPRqwnIZj9r41p8yAO,Cookies,Sweet biscuits
-tjFHLextqE6QsgpMooD9,Crackers,Savoury biscuits
-iESlLx02CfEJYjHUf021,Popcorn,Snacking
-0WUqt88vkfeeK4Ao289z,Ice Cream,Frozen Desserts
-ycnDB377qaonyMcPHFEV,Frozen Pizza,Frozen Meals
+fL8wqmIfGT4VvZo39uYC,Apples,Fresh fruit & vegetables
+sxyNl7roT7pQNk5Jys6g,Asparagus,Fresh fruit & vegetables
+tKu02xnW4j95IF1uRtMD,Avocados,Fresh fruit & vegetables
+IYbNlyEDq7EVsYFpBQUr,Bananas,Fresh fruit & vegetables
+ynGLVaiqI3Uo5LA47g2b,Broccoli,Fresh fruit & vegetables
+5bPFAOrirUPerbWdSuNf,Brown onions,Fresh fruit & vegetables
+h1h3I8ztoJQyThouh7nE,Carrots,Fresh fruit & vegetables
+eO4K7a0t2903qeBXKgyZ,Capsicums,Fresh fruit & vegetables
+4O7dsa3lFor2Fk9UZAkO,Cauliflower,Fresh fruit & vegetables
+gAzcROzQFFAcZsWHEXLc,Celery,Fresh fruit & vegetables
+E4hwBvFgoeS2MlT3u0CR,Cucumbers,Fresh fruit & vegetables
+UyJj9eMesJx3qxNj7keo,Garlic,Fresh fruit & vegetables
+CsvP8O8r9Agnm8cpK40q,Lettuce,Fresh fruit & vegetables
+GYAwl5zd0dOYzyNMwXmh,Pears,Fresh fruit & vegetables
+TPjCoff7bdWkROLHtiPb,Potatoes,Fresh fruit & vegetables
+IFPoYKSp75v8wkt1UVkG,Pumpkin,Fresh fruit & vegetables
+5mRMUclXWt07C5dZXz0N,Oranges,Fresh fruit & vegetables
+5k3XNTADSX6qiBXWiI8i,Onions,Fresh fruit & vegetables
+5z2CGIVSa9X1t5OnSl2Q,Red onions,Fresh fruit & vegetables
+O1ptBMlZZPZ37MZwomzG,Sweet potatoes,Fresh fruit & vegetables
+9A3h3SXoack65okRTzbf,Tomatoes,Fresh fruit & vegetables
+OorvlEkQ1bgnn7q6ajaw,Zucchini,Fresh fruit & vegetables
+26jSUEMtPbPGMzgXrnsC,Bacon,Deli meats
+SLPoXwgBSOZUc25KNwhx,Chorizo,Deli meats
+SpP5CwywutnuPkaJkJXb,Ham,Deli meats
+fjxwTkd1sAx066Csjs0t,Pancetta,Deli meats
+yL0MTIJi3vmpF3HxX3E4,Proscuitto,Deli meats
+OzkolcwH9uEOczPy1Igl,Salami,Deli meats
+ho6nz2Xh5HDR3wCvoUZm,Turkey,Deli meats
+ua3y1le2HwTgyPtq9kFf,Milk,Milk
+5O3n4mF6eD8oLSuvfWQe,Bread,Bread
+JI1MqNSCaLW91Xtwets1,Bread,Bakery
+oA0lsJTqhnU9bMaflGCI,Wraps,Wraps
+JtIrCrUFQ8sdIt9scLXp,Flat bread,Bread
+Ix0kGO0OaNyitAtswZTs,Bread rolls,Rolls
+Y6JWBZd0kwPd4SwSArlT,Eggs,Eggs
+a92x5NN4uDOOvcFMWkZN,Butter,Butter
+zvPsLWZr7WvNMZgXNOXB,Cheese,Cheese
+d7408WengvySMeB0NnHz,Sliced cheese,Cheese
+fA37bh0zOnMvV2zCSeH0,Grated cheese,Cheese
+56MnBa7WH5zCR7YIv77j,Yoghurt,Yoghurt
+uxhYQfUJWJfpAnk9sByr,Chicken,Chicken
+qUnWWsmvWfBIT2QLHRqA,Chicken breast,Chicken
+M2vQzVeJJToRCIlPFRO6,Chicken thigh,Chicken
+qg904xN9Bw59ATZ3ggoQ,Chicken tenderloin,Chicken
+4boTuWZ3Wt9HFhLKUMaS,Beef,Beef
+V6kqaCDapyw6zsQOXn51,Beef mince,Beef
+rU7erXbNsfKzHkBY9eh5,Pork,Pork
+el9dbREgxQpJq3gPtvVI,Pork chops,Pork
+SWWl1arzDJfDqO24diTD,Rice,Rice
+9M2NDGcilVo9pvS68QNp,Pasta,Pasta
+YMxpqNVorGU3zbhLX8Wd,Honey,Spreads
+pufoHNTXRxCDpozkdNsu,Jam,Spreads
+FDrumgFrN3n1k9ajoPAG,Nutella,Spreads
+q2IkHv9dJS3B5IQtHoxl,Peanut butter,Spreads
+wweGbPXmkaO4SeVBGf4O,Vegemite,Spreads
+FsyXSoQU3qbSDIX3odJ3,Cereal,Cereal
+Y4cHJYC1a2GWxCTz3CfV,Muesli,Oats
+SGk9g18csZbWVgGHTTso,Muesli bars,Muesli bars
+b7MQux5bWx4VIggNIi7s,Granola bars,Muesli bars
+CcCKZ4Q92VOPh5b9GkYL,Chips,Chips
+ANLTxbpWZobC47BumXth,Salsa,Mexican
+KvbcPIhpAd7mvvLMlZMj,Cookies,Biscuits
+H6h1ns3DMGSrdW4FY2iE,Crackers,Crackers
+I8qUhEHoViCnGumbAWgr,Popcorn,Popcorn
+xm9KDcQrqQLdiAeDPq6W,Ice Cream,Ice cream
+GDzLWQtx5Sa9gwITZEyk,Frozen pizza,Frozen food
+47lGMVAJThEcFSK0L0vg,Party pies,Frozen food
+OQemaJAYZnchubKWgrj6,Sausage rolls,Frozen food
+tGidCqPP0xUegvy99RLc,Garbage bags,Garbage bags
+4uxpCJ3qIJ8DZgc3vwTG,Toilet paper,Toilet paper
+H7DIUx5PAocsvE4aF39x,Paper towels,Paper towels
+KxGdF4MMKviYKRlxt6k9,Tissues,Tissues
+tdg6nKmJhWRKkaHwEMMC,Air freshener,Air freshener
+aVUBWtgRsEhhHvrVqK2M,Deodorant,Deodorant
+2nkoqcZDJMd0IH677Fyt,Shampoo,Hair care
+rRyLCJPGGRZ968o10UIU,Conditioner,Hair care
+wCfBPpqmNyKrKZ3j3oYu,Alfoil,Foil & wraps
+XzjJStvYCA0OpoYsxRlx,Aluminium foil,Foil & wraps
+e72cSnj1wNKOMu1tkJzR,Baking paper,Foil & wraps
+tEe3zvKdiR3E7t25lhEe,Cling film,Foil & wraps
+r9Np27lGfVM6LHbHnO7n,Cling wrap,Foil & wraps
+Kfk2RmgAtQkU8iUHKccn,Cayenne pepper,Herbs & spices
+XAl7stgpCWXIEDh37AP9,Chilli powder,Herbs & spices
+ISIAzfJwO7ACTrgoH4sA,Chilli flakes,Herbs & spices
+XO4DSwHrPtZ4DBk4xj2j,Cinnamon,Herbs & spices
+LA15dw4ERVmpfOJdXp18,Cloves,Herbs & spices
+wxfV6Qi6BtfSb31XD3OH,Coriander,Herbs & spices
+irV01vlq56gKE98aYlIl,Cumin,Herbs & spices
+3jidMmGQNyxG8YDb2Pot,Curry powder,Herbs & spices
+2c1RCOTBO0c5LlCKpELI,Ginger,Herbs & spices
+ptpS3BsmztQwfRhOMXrI,Mixed herbs,Herbs & spices
+CxO6eYmmLLqEX0hxgAUF,Mixed spice,Herbs & spices
+DZ9oP30hRZnxG3pE8bmT,Nutmeg,Herbs & spices
+LDG1vYGSfhoa4ZFqhP8Z,Onion powder,Herbs & spices
+zArexq81QYwzgM9HEvjy,Onion salt,Herbs & spices
+eUHs4YMVKjslfwrBoNiN,Oregano,Herbs & spices
+AyJEyxcNxblQSijGcdUa,Paprika,Herbs & spices
+oGBSjIMG2MjP0xlSwvin,Parsley,Herbs & spices
+2GmYELsYqinE97F6ZwNf,Pepper,Herbs & spices
+ATDntzHvDoojoXQroaDU,Rosemary,Herbs & spices
+V8iQ3HhEzXrAy9wLTfzD,Salt,Herbs & spices
+YRDCVfeDwVhLhcwh1p9f,Thyme,Herbs & spices
+jE8SRqaQPOLC5aSddVtA,Turmeric,Herbs & spices
+v1BCAiKrReJDwy0Ur5ps,Olive oil,Oils
+k4uwCZgmXJdvyKsOjIt0,Vegetable oil,Oils
+stk1uFshs4zumUvJ37ac,Canola oil,Oils
+rqcbi6h5Jwzzw8QEVOzx,Sunflower oil,Oils
+Jfn6aT0yeVfOZ5WXaVMr,Balsamic vinegar,Vinegar
+gbJMzIEJP4kWLXCZohiK,Red wine vinegar,Vinegar
+D1adTS8MzOba4gmH5uD9,White vinegar,Vinegar
+3BVjYPBO76tgOE7p4DFL,Apple cider vinegar,Vinegar
+5EsSKcgAkKpN2CP0DOtx,BBQ sauce,Sauces & condiments
+XLB5Dy6dV35bGt9JZZVK,Chilli sauce,Sauces & condiments
+Rx7in2jLxssTuOB0oWyi,Mayonnaise,Sauces & condiments
+NUT63hwefBEoRBP5xhpA,Mustard,Sauces & condiments
+BLj1ERP07HigXJQaNZCG,Siracha,Sauces & condiments
+a8WuFkCQtSNj3ZLIOC2O,Sweet chilli sauce,Sauces & condiments
+QuQefHzJAarlW2BkeWWe,Tomato sauce,Sauces & condiments
+lqDNxWURQNhROk50ZWQj,Worcestershire sauce,Sauces & condiments
+ScNhkb34juoVNebOxwXN,Dark soy sauce,Asian
+hXJA56lGPfFVjrVCSQdd,Fish sauce,Asian
+TrQBs2HDlWOJwTrVQ6FP,Hoisin sauce,Sauces & condiments
+s40PWgLwGw8lKDRavBp5,Oyster sauce,Sauces & condiments
+IF9D8jz6N3sIdb0oq0iS,Soy sauce,Asian
+XuZZ2jICiVehaQDvoJEF,Tamari,Asian
+DDVzZYCtY5zATv0ZqhPj,Teriyaki sauce,Asian
