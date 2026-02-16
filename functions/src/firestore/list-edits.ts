@@ -88,7 +88,7 @@ export const onItemDeleted = onDocumentCreated(`/${collections.lists}/{listId}/$
     const itemCount = itemCountSnap.data().count;
     const listData = listDoc.data();
     if (!listData) {
-      throw new Error("List not found");
+      throw new Error("List not found with id: " + listId);
     }
 
     // Update user
