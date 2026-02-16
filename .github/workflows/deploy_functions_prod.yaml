@@ -1,53 +1,18 @@
 name: Prod Deploy Functions
 on:
   workflow_dispatch:
+    inputs:
+      verbose:
+        description: 'Enable verbose logging'
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   deploy_functions:
-    runs-on: ubuntu-latest
-    environment: 'Production'
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-
-    - name: Setup Node.js 
-      uses: actions/setup-node@v4
-      with:
-        node-version: 22
-    
-    - name: Install dependencies
-      working-directory: ./functions
-      run: npm install
-
-    - name: Lint
-      working-directory: ./functions
-      run: npm run lint
-
-    - name: Build
-      working-directory: ./functions
-      run: npm run build
-
-    - name: Install Firebase CLI
-      run: curl -sL https://firebase.tools | bash
-  
-    - name: Deploy Firebase Functions
-      env:
-        SERVICE_ACCOUNT: ${{ secrets.FB_FUNCTIONS_CREDENTIALS }}
-      run: |
-        echo "$SERVICE_ACCOUNT" >> google_service_account.json
-        export GOOGLE_APPLICATION_CREDENTIALS=google_service_account.json
-        firebase --version
-        firebase deploy --project ${{ vars.FB_PROJECT_NAME }} --only functions --debug
-
-    - name: Install gcloud CLI
-      run: |
-        curl -sL https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-cli-501.0.0-linux-x86_64.tar.gz | tar xz
-        CLOUDSDK_CORE_DISABLE_PROMPTS=1 ./google-cloud-sdk/install.sh
-
-    - name: Delete build artifacts 
-      run: |
-        gcloud --version
-        gcloud auth activate-service-account --key-file=google_service_account.json
-        gcloud artifacts repositories delete gcf-artifacts --project=${{ vars.FB_PROJECT_NAME }} --location=australia-southeast1 --quiet
+    uses: ./.github/workflows/deploy_functions_base.yaml
+    with:
+      environment: 'Production'
+      project_name: 'quickshop-prod'
+      verbose: ${{ inputs.verbose }}
+    secrets: inherit
